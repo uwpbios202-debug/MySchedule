@@ -15,8 +15,6 @@
             --uwp-text-light: #666666;
             --uwp-border: #D0D0D0;
             --uwp-hover: #003B73;
-            --uwp-warning: #D44500;
-            --uwp-success: #00703C;
         }
         
         * {
@@ -89,379 +87,154 @@
             margin-top: 2px;
         }
         
-        /* Previous diagnostic styles remain the same until results section */
-        
-        /* ENHANCED RESULTS PAGE */
-        .results-container {
-            padding: 15px;
-        }
-        
-        .results-header {
-            border-bottom: 2px solid var(--uwp-primary);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .results-header h2 {
-            color: var(--uwp-primary);
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-        
-        .results-header p {
-            color: var(--uwp-text-light);
-            font-size: 13px;
-        }
-        
-        /* Personalized Insight Dashboard */
-        .insight-dashboard {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .primary-insight {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border: 1px solid var(--uwp-border);
-            border-radius: 4px;
-            padding: 15px;
-            border-left: 4px solid var(--uwp-primary);
-        }
-        
-        .primary-insight h3 {
-            color: var(--uwp-primary);
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        
-        .insight-emphasis {
-            background: #FFF3CD;
-            border-left: 4px solid #FFC107;
-            padding: 10px;
-            margin: 10px 0;
-            font-style: italic;
-            font-weight: 500;
-        }
-        
-        .quick-summary {
-            background: white;
-            border: 1px solid var(--uwp-border);
-            border-radius: 4px;
-            padding: 15px;
-        }
-        
-        .quick-summary h4 {
-            color: var(--uwp-primary);
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        
-        .summary-item {
+        /* Compact Diagnostic Layout */
+        .diagnostic-container {
             display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-            border-bottom: 1px solid #f0f0f0;
+            min-height: 500px;
         }
         
-        .summary-item:last-child {
-            border-bottom: none;
-        }
-        
-        /* Enhanced Score Analysis */
-        .score-analysis {
-            margin: 20px 0;
-        }
-        
-        .analysis-section {
-            margin-bottom: 15px;
-            padding: 15px;
-            border: 1px solid var(--uwp-border);
-            border-radius: 4px;
-            background: white;
-        }
-        
-        .section-header-score {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .section-title {
-            font-weight: 600;
-            color: var(--uwp-primary);
-            font-size: 14px;
-        }
-        
-        .score-display {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .score-value {
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--uwp-dark);
-        }
-        
-        .score-bar-container {
-            width: 100px;
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .score-bar {
-            height: 100%;
-            border-radius: 4px;
-        }
-        
-        .score-low { background: var(--uwp-success); }
-        .score-medium { background: #FFC107; }
-        .score-high { background: var(--uwp-warning); }
-        
-        .score-label {
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        
-        .score-low-label { color: var(--uwp-success); }
-        .score-medium-label { color: #FFC107; }
-        .score-high-label { color: var(--uwp-warning); }
-        
-        .personalized-insight {
-            margin-top: 10px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 3px;
-            font-size: 12.5px;
-        }
-        
-        .insight-icon {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            margin-right: 5px;
-            text-align: center;
-            line-height: 16px;
-            font-size: 10px;
-            font-weight: bold;
-        }
-        
-        .insight-strength { background: var(--uwp-success); color: white; }
-        .insight-challenge { background: var(--uwp-warning); color: white; }
-        .insight-neutral { background: var(--uwp-secondary); color: var(--uwp-text); }
-        
-        /* Personalized Action Plan */
-        .action-plan {
-            margin: 20px 0;
-            background: white;
-            border: 1px solid var(--uwp-border);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .action-plan-header {
-            background: linear-gradient(to right, var(--uwp-primary), var(--uwp-dark));
-            color: white;
-            padding: 12px 15px;
-            font-weight: 600;
-        }
-        
-        .action-item {
-            padding: 12px 15px;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-        
-        .action-item:last-child {
-            border-bottom: none;
-        }
-        
-        .action-number {
-            background: var(--uwp-primary);
-            color: white;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
+        /* Sections Sidebar - Fixed */
+        .sections-sidebar {
+            width: 180px;
+            background: var(--uwp-light);
+            border-right: 1px solid var(--uwp-border);
+            padding: 10px 0;
             flex-shrink: 0;
         }
         
-        .action-content h4 {
-            color: var(--uwp-primary);
-            margin-bottom: 5px;
-            font-size: 13px;
+        .section-nav {
+            list-style: none;
         }
         
-        .action-content p {
-            font-size: 12.5px;
+        .section-nav li {
+            margin: 0;
+        }
+        
+        .section-nav a {
+            display: block;
+            padding: 6px 10px;
             color: var(--uwp-text);
-        }
-        
-        /* Lab-Centered Design */
-        .lab-design {
-            margin: 20px 0;
-            background: white;
-            border: 1px solid var(--uwp-border);
-            border-radius: 4px;
-            padding: 15px;
-        }
-        
-        .lab-design h3 {
-            color: var(--uwp-primary);
-            margin-bottom: 15px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .lab-anchor {
-            background: var(--uwp-accent);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 3px;
+            text-decoration: none;
             font-size: 12px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .section-nav a:hover {
+            background: rgba(0, 85, 150, 0.05);
+        }
+        
+        .section-nav a.active {
+            background: rgba(0, 85, 150, 0.1);
+            border-left-color: var(--uwp-primary);
             font-weight: 600;
-        }
-        
-        .lab-phase {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .phase-card {
-            border: 1px solid var(--uwp-border);
-            border-radius: 4px;
-            padding: 12px;
-            background: #f8f9fa;
-        }
-        
-        .phase-card h4 {
             color: var(--uwp-primary);
-            margin-bottom: 8px;
+        }
+        
+        /* Questions Area - Scrollable */
+        .questions-area {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 500px;
+            padding: 10px;
+        }
+        
+        .section {
+            margin-bottom: 15px;
+            border: 1px solid var(--uwp-border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--uwp-border);
+            font-weight: 600;
+            color: var(--uwp-primary);
             font-size: 13px;
+        }
+        
+        /* Ultra-Compact Question Format */
+        .question-row {
             display: flex;
             align-items: center;
-            gap: 5px;
+            padding: 4px 8px;
+            border-bottom: 1px solid #f0f0f0;
+            min-height: 30px;
         }
         
-        .phase-time {
+        .question-row:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+        
+        .question-text {
+            flex: 1;
+            padding-right: 15px;
+            font-size: 12.5px;
+            line-height: 1.2;
+            min-width: 0;
+        }
+        
+        /* Compact Scale - Inline with question */
+        .scale-compact {
+            display: flex;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        
+        .scale-option {
+            display: flex;
+            align-items: center;
+            margin-left: 3px;
+        }
+        
+        .scale-option input[type="radio"] {
+            margin: 0 2px 0 0;
+            transform: scale(0.9);
+        }
+        
+        .scale-label {
             font-size: 11px;
             color: var(--uwp-text-light);
-            background: white;
-            padding: 2px 6px;
-            border-radius: 2px;
-            display: inline-block;
-            margin-bottom: 8px;
+            white-space: nowrap;
         }
         
-        /* Comparison Visualization */
-        .comparison-viz {
-            margin: 20px 0;
-            background: white;
-            border: 1px solid var(--uwp-border);
-            border-radius: 4px;
-            padding: 15px;
-        }
-        
-        .viz-header {
+        /* Button Container */
+        .button-container {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-top: 1px solid var(--uwp-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
         }
         
-        .viz-header h3 {
-            color: var(--uwp-primary);
-            font-size: 16px;
-        }
-        
-        .viz-container {
-            display: flex;
-            height: 120px;
-            gap: 10px;
-            align-items: flex-end;
-        }
-        
-        .viz-column {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .viz-bar {
-            width: 80%;
-            border-radius: 3px 3px 0 0;
-            transition: height 0.5s ease;
-        }
-        
-        .viz-label {
-            margin-top: 5px;
-            font-size: 11px;
-            text-align: center;
-            font-weight: 600;
-        }
-        
-        .viz-value {
-            font-size: 10px;
-            color: var(--uwp-text-light);
-            margin-top: 2px;
-        }
-        
-        /* Download Section */
-        .download-section {
-            text-align: center;
-            margin: 25px 0 15px 0;
-            padding: 20px;
-            background: linear-gradient(to right, #f8f9fa, #e9ecef);
-            border-radius: 4px;
-            border: 1px solid var(--uwp-border);
-        }
-        
-        .download-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        
+        /* UWP Buttons */
         .btn {
             background: var(--uwp-primary);
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 2px;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: background 0.2s;
             text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
         }
         
         .btn:hover {
             background: var(--uwp-hover);
+        }
+        
+        .btn-secondary {
+            background: var(--uwp-secondary);
+            color: var(--uwp-text);
+        }
+        
+        .btn-secondary:hover {
+            background: #b0b4bc;
         }
         
         .btn-success {
@@ -472,38 +245,58 @@
             background: #005a2d;
         }
         
-        .btn-warning {
-            background: var(--uwp-warning);
-        }
-        
-        .btn-warning:hover {
-            background: #b33a00;
-        }
-        
         /* Hidden sections */
         .hidden {
             display: none !important;
         }
         
-        /* Responsive */
+        /* UWP Footer */
+        .uwp-footer {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-top: 1px solid var(--uwp-border);
+            font-size: 11px;
+            color: var(--uwp-text-light);
+            text-align: center;
+        }
+        
         @media (max-width: 768px) {
-            .insight-dashboard {
-                grid-template-columns: 1fr;
-            }
-            
-            .lab-phase {
-                grid-template-columns: 1fr;
-            }
-            
-            .download-buttons {
+            .diagnostic-container {
                 flex-direction: column;
-                align-items: center;
+                min-height: auto;
             }
             
-            .btn {
+            .sections-sidebar {
                 width: 100%;
-                max-width: 300px;
-                justify-content: center;
+                border-right: none;
+                border-bottom: 1px solid var(--uwp-border);
+                padding: 5px 0;
+            }
+            
+            .section-nav {
+                display: flex;
+                overflow-x: auto;
+                padding: 0 5px;
+            }
+            
+            .section-nav li {
+                flex-shrink: 0;
+            }
+            
+            .section-nav a {
+                padding: 4px 8px;
+                border-left: none;
+                border-bottom: 2px solid transparent;
+            }
+            
+            .section-nav a.active {
+                border-left: none;
+                border-bottom: 2px solid var(--uwp-primary);
+            }
+            
+            .questions-area {
+                max-height: 400px;
             }
         }
     </style>
@@ -524,130 +317,95 @@
             <div class="progress-text">Section <span id="currentSection">A</span> of 5 • <span id="questionsComplete">0</span>/25 questions answered</div>
         </div>
         
-        <!-- Main Diagnostic Container (Previous implementation) -->
-        <div class="diagnostic-container">
-            <!-- Previous diagnostic interface remains exactly the same -->
-            <!-- ... (omitted for brevity, same as before) ... -->
+        <!-- Main Diagnostic Container - VISIBLE BY DEFAULT -->
+        <div class="diagnostic-container" id="mainDiagnostic">
+            <!-- Sections Sidebar -->
+            <div class="sections-sidebar">
+                <ul class="section-nav">
+                    <li><a href="#" class="active" data-section="A">A. Time Volatility</a></li>
+                    <li><a href="#" data-section="B">B. Planning Skills</a></li>
+                    <li><a href="#" data-section="C">C. Study Strategies</a></li>
+                    <li><a href="#" data-section="D">D. Attention & Focus</a></li>
+                    <li><a href="#" data-section="E">E. Access & Identity</a></li>
+                </ul>
+            </div>
+            
+            <!-- Questions Area -->
+            <div class="questions-area" id="questionsArea">
+                <!-- Section A (default visible) -->
+                <div class="section" id="sectionA">
+                    <div class="section-header">
+                        Section A: Time Volatility & External Constraints
+                        <span style="float:right; font-weight:normal; font-size:11px;">
+                            Score: <span id="scoreA">0</span>/21
+                        </span>
+                    </div>
+                    
+                    <!-- Questions will be generated here -->
+                    <div id="questionsSectionA"></div>
+                </div>
+                
+                <!-- Other sections (hidden by default) -->
+                <div class="section hidden" id="sectionB">
+                    <div class="section-header">
+                        Section B: Planning & Time Estimation Skills
+                        <span style="float:right; font-weight:normal; font-size:11px;">
+                            Score: <span id="scoreB">0</span>/12
+                        </span>
+                    </div>
+                    <div id="questionsSectionB"></div>
+                </div>
+                
+                <div class="section hidden" id="sectionC">
+                    <div class="section-header">
+                        Section C: Study Strategies & Academic Know-How
+                        <span style="float:right; font-weight:normal; font-size:11px;">
+                            Score: <span id="scoreC">0</span>/12
+                        </span>
+                    </div>
+                    <div id="questionsSectionC"></div>
+                </div>
+                
+                <div class="section hidden" id="sectionD">
+                    <div class="section-header">
+                        Section D: Motivation, Attention, & Mental Load
+                        <span style="float:right; font-weight:normal; font-size:11px;">
+                            Score: <span id="scoreD">0</span>/15
+                        </span>
+                    </div>
+                    <div id="questionsSectionD"></div>
+                </div>
+                
+                <div class="section hidden" id="sectionE">
+                    <div class="section-header">
+                        Section E: Access, Identity, & Learning Differences
+                        <span style="float:right; font-weight:normal; font-size:11px;">
+                            Score: <span id="scoreE">0</span>/12
+                        </span>
+                    </div>
+                    <div id="questionsSectionE"></div>
+                </div>
+            </div>
         </div>
         
-        <!-- ENHANCED RESULTS PAGE -->
-        <div class="hidden" id="enhancedResultsPage">
-            <div class="results-container">
-                <div class="results-header">
-                    <h2>📊 Your Personal Schedule Analysis</h2>
-                    <p>Based on your diagnostic responses, here's what your scores reveal about your scheduling system</p>
-                </div>
-                
-                <!-- Personalized Insight Dashboard -->
-                <div class="insight-dashboard">
-                    <div class="primary-insight">
-                        <h3>🎯 Your Primary Scheduling Challenge</h3>
-                        <div id="primaryChallengeText">
-                            <p>Your diagnostic shows that <strong id="challengeArea">[Challenge Area]</strong> is your biggest scheduling obstacle. This isn't a personal flaw—it's a <em>system mismatch</em>.</p>
-                        </div>
-                        <div class="insight-emphasis" id="personalizedAha">
-                            "Your current system is failing because it doesn't account for [your specific constraint]. Here's how to fix it..."
-                        </div>
-                        <p id="systemMismatchDetail">The standard advice you've been given assumes [wrong assumption], but your reality requires [your actual need].</p>
-                    </div>
-                    
-                    <div class="quick-summary">
-                        <h4>📈 Your Profile Summary</h4>
-                        <div class="summary-item">
-                            <span>Situation Type:</span>
-                            <strong id="situationType">Analyzing...</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Total Score:</span>
-                            <strong id="totalScoreDisplay">0/72</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Biggest Strength:</span>
-                            <strong id="biggestStrength">Identifying...</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Critical Area:</span>
-                            <strong id="criticalArea">Analyzing...</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Lab Impact:</span>
-                            <strong id="labImpact">Calculating...</strong>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Detailed Score Analysis -->
-                <div class="score-analysis">
-                    <h3 style="color: var(--uwp-primary); margin-bottom: 15px; font-size: 16px;">📋 Section-by-Section Analysis</h3>
-                    
-                    <div id="scoreAnalysisContainer">
-                        <!-- Will be populated by JavaScript -->
-                        <p>Complete the diagnostic to see your personalized score analysis...</p>
-                    </div>
-                </div>
-                
-                <!-- Personalized Action Plan -->
-                <div class="action-plan">
-                    <div class="action-plan-header">🚀 Your Personalized Action Plan</div>
-                    <div id="actionPlanItems">
-                        <!-- Will be populated by JavaScript -->
-                    </div>
-                </div>
-                
-                <!-- Lab-Centered Design -->
-                <div class="lab-design">
-                    <h3>🧪 Lab-Centered Week Design <span class="lab-anchor">Tuesday 2:00-4:50</span></h3>
-                    <p>Based on your scores, here's how to structure your week around your lab:</p>
-                    
-                    <div class="lab-phase">
-                        <div class="phase-card" id="preLabDesign">
-                            <h4>📅 Pre-Lab Preparation</h4>
-                            <div class="phase-time" id="preLabTime">Loading...</div>
-                            <p id="preLabStrategy">Your pre-lab strategy will be customized based on your planning scores.</p>
-                        </div>
-                        
-                        <div class="phase-card" id="inLabDesign">
-                            <h4>🔬 In-Lab Approach</h4>
-                            <div class="phase-time">Tuesday 2:00-4:50</div>
-                            <p id="inLabStrategy">Your in-lab focus will be adjusted based on your attention scores.</p>
-                        </div>
-                        
-                        <div class="phase-card" id="postLabDesign">
-                            <h4>📝 Post-Lab Processing</h4>
-                            <div class="phase-time" id="postLabTime">Loading...</div>
-                            <p id="postLabStrategy">Your post-lab strategy will be optimized based on your time volatility.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Score Comparison Visualization -->
-                <div class="comparison-viz">
-                    <div class="viz-header">
-                        <h3>⚖️ Your Score Profile vs Typical Student</h3>
-                        <div style="font-size: 11px; color: var(--uwp-text-light);">Higher bars = bigger challenges</div>
-                    </div>
-                    <div class="viz-container" id="comparisonViz">
-                        <!-- Visualization will be generated by JavaScript -->
-                    </div>
-                </div>
-                
-                <!-- Download Section -->
-                <div class="download-section">
-                    <h3 style="color: var(--uwp-primary); margin-bottom: 10px;">📥 Save Your Personal Analysis</h3>
-                    <p style="color: var(--uwp-text-light); font-size: 12px; margin-bottom: 15px;">Download your personalized plan for reference or share with an academic advisor</p>
-                    
-                    <div class="download-buttons">
-                        <button class="btn-success" id="downloadPersonalPlan">
-                            📄 Download Personal Plan (PDF)
-                        </button>
-                        <button class="btn" id="scheduleAdvisorMeeting">
-                            👥 Schedule Advisor Meeting
-                        </button>
-                        <button class="btn-warning" id="retakeDiagnosticBtn">
-                            🔄 Retake Diagnostic
-                        </button>
-                    </div>
-                </div>
+        <!-- Button Container -->
+        <div class="button-container">
+            <div>
+                <button class="btn-secondary" id="saveProgress">Save Progress</button>
+                <button class="btn-secondary" id="clearSection">Clear Section</button>
+            </div>
+            <div>
+                <button class="btn-secondary" id="prevSection" disabled>← Previous Section</button>
+                <button class="btn" id="nextSection">Next Section →</button>
+                <button class="btn-success hidden" id="viewResults">View Results & Recommendations</button>
+            </div>
+        </div>
+        
+        <!-- Results Page (Hidden by default) -->
+        <div class="hidden" id="resultsPage">
+            <!-- Results content would go here -->
+            <div style="padding:15px;">
+                <h2 style="color:var(--uwp-primary);">Results will appear here when you complete the diagnostic</h2>
             </div>
         </div>
         
@@ -660,433 +418,380 @@
     </div>
 
     <script>
-        // ENHANCED PERSONALIZATION LOGIC ENGINE
+        // Question Data - All 25 questions
+        const questions = {
+            A: [
+                "My weekly workload changes significantly from one week to the next.",
+                "My job, internship, or extracurricular activities have irregular hours.",
+                "Social or family responsibilities frequently disrupt my planned study time.",
+                "My class schedule includes rotating labs, recitations, or variable meeting times.",
+                "Commuting or transportation takes time and energy I can't always predict.",
+                "Multiple exams or major assignments tend to cluster in the same weeks.",
+                "I have caregiving responsibilities that affect when or how long I can study."
+            ],
+            B: [
+                "I often underestimate how long assignments or studying will take.",
+                "I plan study time without accounting for fatigue or transition time.",
+                "I feel guilty or stressed when I can't follow a study plan exactly.",
+                "I struggle to decide *what* to study during a scheduled session.",
+                "I rely on last-minute studying because it has worked for me before."
+            ],
+            C: [
+                "I'm unsure which study methods actually improve long-term learning.",
+                "I default to rereading, highlighting, or cramming before exams.",
+                "I don't always understand what instructors expect me to know for exams.",
+                "I wait to study because I'm not sure what content is most important."
+            ],
+            D: [
+                "I procrastinate even when I've scheduled study time.",
+                "Digital distractions (phone, apps, games) derail my study sessions.",
+                "I feel mentally drained before I even start studying.",
+                "I worry that strict schedules will increase my stress or burnout.",
+                "My sleep schedule is irregular, which affects my focus and energy."
+            ],
+            E: [
+                "I don't always have reliable access to quiet space, technology, or internet.",
+                "I have ADHD, anxiety, or other learning differences that affect time perception or focus.",
+                "I feel pressure to 'handle everything on my own,' even when struggling.",
+                "I sometimes question whether I belong or am 'cut out' for college."
+            ]
+        };
         
-        // Previous diagnostic code remains the same up to the showResults function
+        const sectionMaxScores = {
+            A: 21, // 7 questions * 3 max
+            B: 15, // 5 questions * 3 max
+            C: 12, // 4 questions * 3 max
+            D: 15, // 5 questions * 3 max
+            E: 12  // 4 questions * 3 max
+        };
         
-        // Enhanced showResults function
-        function showEnhancedResults() {
-            document.querySelector('.diagnostic-container').classList.add('hidden');
-            document.querySelector('.button-container').classList.add('hidden');
-            document.getElementById('enhancedResultsPage').classList.remove('hidden');
-            
-            // Calculate all insights
-            calculatePersonalizedInsights();
-            generateScoreAnalysis();
-            generateActionPlan();
-            generateLabDesign();
-            generateVisualization();
-        }
+        // Initialize scores
+        let scores = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+        let answers = {};
+        let currentSection = 'A';
         
-        // Personalization Logic Engine
-        function calculatePersonalizedInsights() {
-            const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
-            
-            // Determine which sections are strengths (low scores) and challenges (high scores)
-            const sectionLabels = {
-                A: 'Time Volatility',
-                B: 'Planning & Estimation',
-                C: 'Study Strategies',
-                D: 'Attention & Focus',
-                E: 'Access & Constraints'
-            };
-            
-            // Calculate percentage of max for each section
-            const sectionPercentages = {};
-            for (const section in scores) {
-                sectionPercentages[section] = (scores[section] / sectionMaxScores[section]) * 100;
-            }
-            
-            // Find highest and lowest scores
-            let highestSection = '';
-            let highestPercentage = 0;
-            let lowestSection = '';
-            let lowestPercentage = 100;
-            
-            for (const section in sectionPercentages) {
-                if (sectionPercentages[section] > highestPercentage) {
-                    highestPercentage = sectionPercentages[section];
-                    highestSection = section;
-                }
-                if (sectionPercentages[section] < lowestPercentage) {
-                    lowestPercentage = sectionPercentages[section];
-                    lowestSection = section;
-                }
-            }
-            
-            // Determine situation type
-            const situationType = determineSituationType(totalScore, sectionPercentages);
-            
-            // Generate personalized text
-            document.getElementById('situationType').textContent = situationType.name;
-            document.getElementById('totalScoreDisplay').textContent = `${totalScore}/72`;
-            
-            // Primary Challenge
-            const challengeText = generateChallengeText(highestSection, highestPercentage, situationType);
-            document.getElementById('challengeArea').textContent = sectionLabels[highestSection];
-            document.getElementById('primaryChallengeText').innerHTML = challengeText;
-            
-            // "Aha!" Moment
-            const ahaMoment = generateAhaMoment(highestSection, lowestSection, situationType);
-            document.getElementById('personalizedAha').innerHTML = ahaMoment;
-            
-            // System Mismatch Detail
-            const mismatchDetail = generateMismatchDetail(highestSection, sectionPercentages);
-            document.getElementById('systemMismatchDetail').textContent = mismatchDetail;
-            
-            // Quick Summary
-            document.getElementById('biggestStrength').textContent = 
-                sectionLabels[lowestSection] + " (" + Math.round(lowestPercentage) + "%)";
-            document.getElementById('criticalArea').textContent = 
-                sectionLabels[highestSection] + " (" + Math.round(highestPercentage) + "%)";
-            document.getElementById('labImpact').textContent = 
-                calculateLabImpact(sectionPercentages);
-            
-            // Store for other functions
-            window.userProfile = {
-                scores: scores,
-                percentages: sectionPercentages,
-                highestSection: highestSection,
-                lowestSection: lowestSection,
-                situationType: situationType,
-                totalScore: totalScore
-            };
-        }
-        
-        function determineSituationType(totalScore, percentages) {
-            // More sophisticated determination based on score patterns
-            const types = {
-                1: { name: "Volatile Week Student", description: "Your schedule changes too much for fixed plans" },
-                2: { name: "Overcommitted Achiever", description: "Trying to do everything leads to mid-week collapse" },
-                3: { name: "Last-Minute Survivor", description: "Relies on adrenaline rather than systems" },
-                4: { name: "Strategy-Deficient Student", description: "Willing to study but unsure how" },
-                5: { name: "Burned-Out / Low Bandwidth", description: "Energy, not time, is your bottleneck" },
-                6: { name: "Structurally Constrained", description: "External constraints dominate your schedule" },
-                7: { name: "Miscalibrated Optimist", description: "Has time but misjudges effort required" }
-            };
-            
-            // Pattern-based determination
-            if (percentages.A > 70) return types[1];
-            if (percentages.A > 60 && percentages.B > 60) return types[2];
-            if (percentages.B > 70 && percentages.C > 60) return types[3];
-            if (percentages.C > 70) return types[4];
-            if (percentages.D > 70) return types[5];
-            if (percentages.E > 70) return types[6];
-            if (percentages.B > 70 && percentages.A < 30) return types[7];
-            
-            // Fallback to total score
-            if (totalScore >= 55) return types[1];
-            if (totalScore >= 45) return types[2];
-            if (totalScore >= 38) return types[3];
-            if (totalScore >= 30) return types[4];
-            if (totalScore >= 22) return types[5];
-            if (totalScore >= 15) return types[6];
-            return types[7];
-        }
-        
-        function generateChallengeText(section, percentage, situationType) {
-            const challenges = {
-                A: `Your weekly schedule changes significantly (${Math.round(percentage)}% volatility score).`,
-                B: `You consistently underestimate how long tasks take (${Math.round(percentage)}% planning gap).`,
-                C: `You're unsure which study methods actually work (${Math.round(percentage)}% strategy gap).`,
-                D: `Attention and energy management are your main constraints (${Math.round(percentage)}% focus challenge).`,
-                E: `External constraints significantly impact your scheduling (${Math.round(percentage)}% access challenge).`
-            };
-            
-            return `<p>Your diagnostic shows that <strong>${challenges[section]}</strong> This isn't a personal flaw—it means you're a <em>"${situationType.name}"</em> who needs a different system.</p>`;
-        }
-        
-        function generateAhaMoment(highestSection, lowestSection, situationType) {
-            const ahaMoments = {
-                A: `"Your current system fails because it assumes a predictable week, but yours changes constantly. Instead of fighting this, build a flexible system that adapts week-to-week."`,
-                B: `"Your planning doesn't account for reality. You're not lazy—you're using estimates that don't match actual task duration. Add 50% buffer to all time estimates."`,
-                C: `"You're putting in time but not getting results because you're using ineffective study methods. Replace rereading with retrieval practice and spaced repetition."`,
-                D: `"You have time scheduled but can't focus during it. This isn't discipline—it's cognitive load. Schedule demanding tasks during peak energy hours only."`,
-                E: `"Standard advice assumes stable conditions, but yours vary. Don't force a 'perfect' schedule—build one that works with your actual constraints."`
-            };
-            
-            return ahaMoments[highestSection] || `"Your ${situationType.description}"`;
-        }
-        
-        function generateMismatchDetail(highestSection, percentages) {
-            const mismatches = {
-                A: `The standard advice assumes predictable weeks, but your reality requires flexible, modular systems that can adapt to changing demands.`,
-                B: `Conventional planning assumes accurate time estimation, but you need systems with built-in buffers and realistic task breakdowns.`,
-                C: `Typical study advice assumes you know effective methods, but you need explicit training in evidence-based learning strategies.`,
-                D: `Traditional scheduling assumes willpower is constant, but you need energy-aware planning that matches tasks to cognitive capacity.`,
-                E: `Common systems assume equal access and conditions, but you need adaptive approaches that work within your specific constraints.`
-            };
-            
-            return mismatches[highestSection] || "Your current system doesn't match your actual constraints.";
-        }
-        
-        function calculateLabImpact(percentages) {
-            if (percentages.A > 60) return "HIGH: Labs disrupt your entire week";
-            if (percentages.D > 60) return "HIGH: Labs drain cognitive energy";
-            if (percentages.B > 60) return "MODERATE: Lab prep requires better planning";
-            if (percentages.C > 60) return "MODERATE: Need lab-specific study strategies";
-            return "LOW: Labs fit reasonably in your schedule";
-        }
-        
-        function generateScoreAnalysis() {
-            const container = document.getElementById('scoreAnalysisContainer');
-            const profile = window.userProfile;
-            
-            let html = '';
-            
-            for (const section in profile.percentages) {
-                const percentage = profile.percentages[section];
-                const score = profile.scores[section];
-                const max = sectionMaxScores[section];
-                const sectionNames = {A:'Time Volatility', B:'Planning Skills', C:'Study Strategies', D:'Attention & Focus', E:'Access & Constraints'};
+        // Generate all questions on page load
+        function generateQuestions() {
+            for (const section in questions) {
+                const container = document.getElementById(`questionsSection${section}`);
+                container.innerHTML = '';
                 
-                // Determine score level
-                let level = '';
-                let levelClass = '';
-                let levelLabel = '';
-                
-                if (percentage < 34) {
-                    level = 'low';
-                    levelClass = 'score-low';
-                    levelLabel = 'score-low-label';
-                } else if (percentage < 67) {
-                    level = 'medium';
-                    levelClass = 'score-medium';
-                    levelLabel = 'score-medium-label';
-                } else {
-                    level = 'high';
-                    levelClass = 'score-high';
-                    levelLabel = 'score-high-label';
-                }
-                
-                // Generate insight
-                const insight = generateSectionInsight(section, percentage, level);
-                
-                html += `
-                    <div class="analysis-section">
-                        <div class="section-header-score">
-                            <div class="section-title">${section}. ${sectionNames[section]}</div>
-                            <div class="score-display">
-                                <span class="score-value">${score}/${max}</span>
-                                <span class="score-label ${levelLabel}">${level.toUpperCase()}</span>
-                                <div class="score-bar-container">
-                                    <div class="score-bar ${levelClass}" style="width: ${percentage}%"></div>
-                                </div>
+                questions[section].forEach((question, index) => {
+                    const questionNum = getQuestionNumber(section, index);
+                    const row = document.createElement('div');
+                    row.className = 'question-row';
+                    row.id = `q${questionNum}`;
+                    
+                    row.innerHTML = `
+                        <div class="question-text">
+                            ${questionNum}. ${question}
+                        </div>
+                        <div class="scale-compact">
+                            <div class="scale-option">
+                                <input type="radio" name="q${questionNum}" value="0" id="q${questionNum}_0">
+                                <label class="scale-label" for="q${questionNum}_0">0</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q${questionNum}" value="1" id="q${questionNum}_1">
+                                <label class="scale-label" for="q${questionNum}_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q${questionNum}" value="2" id="q${questionNum}_2">
+                                <label class="scale-label" for="q${questionNum}_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q${questionNum}" value="3" id="q${questionNum}_3">
+                                <label class="scale-label" for="q${questionNum}_3">3</label>
                             </div>
                         </div>
-                        <div class="personalized-insight">
-                            <span class="insight-icon ${level === 'low' ? 'insight-strength' : level === 'high' ? 'insight-challenge' : 'insight-neutral'}">
-                                ${level === 'low' ? '✓' : level === 'high' ? '!' : '•'}
-                            </span>
-                            ${insight}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            container.innerHTML = html;
-        }
-        
-        function generateSectionInsight(section, percentage, level) {
-            const insights = {
-                A: {
-                    low: "Your schedule is relatively stable—you can use fixed weekly plans effectively.",
-                    medium: "Some weeks vary—build flexibility into your system with optional/adjustable blocks.",
-                    high: "Your weeks change dramatically—you need modular systems that rebuild each week."
-                },
-                B: {
-                    low: "You're good at estimating time—your plans match reality well.",
-                    medium: "Sometimes underestimate tasks—add 25% buffer to your time estimates.",
-                    high: "You consistently underestimate how long tasks take—double your initial time estimates."
-                },
-                C: {
-                    low: "You know effective study methods—focus on applying them consistently.",
-                    medium: "Some methods may be ineffective—audit which techniques actually work for you.",
-                    high: "You're using inefficient study methods—replace rereading with retrieval practice and spaced repetition."
-                },
-                D: {
-                    low: "You can maintain focus well—schedule demanding tasks appropriately.",
-                    medium: "Attention varies—match task difficulty to your energy levels throughout the day.",
-                    high: "Focus is your main constraint—schedule only 1-2 demanding tasks per day during peak energy."
-                },
-                E: {
-                    low: "You have reliable access and conditions—standard scheduling advice applies well.",
-                    medium: "Some constraints exist—build backup plans for when conditions change.",
-                    high: "External constraints dominate—create multiple plan versions for different scenarios."
-                }
-            };
-            
-            return insights[section][level];
-        }
-        
-        function generateActionPlan() {
-            const container = document.getElementById('actionPlanItems');
-            const profile = window.userProfile;
-            
-            // Generate 3-5 specific actions based on scores
-            const actions = [];
-            
-            // Always include lab anchoring
-            actions.push({
-                title: "Anchor Your Week Around Tuesday Lab",
-                text: "Treat Tuesday 2:00-4:50 as the fixed point your week revolves around. Build everything else around this."
-            });
-            
-            // Based on highest scoring section
-            const highSectionActions = {
-                A: {
-                    title: "Implement Modular Scheduling",
-                    text: "Create study blocks that can move between Tuesday/Wednesday/Thursday based on weekly changes."
-                },
-                B: {
-                    title: "Apply the 50% Buffer Rule",
-                    text: "For every study session you plan, add 50% more time than your initial estimate."
-                },
-                C: {
-                    title: "Schedule Strategy Learning Time",
-                    text: "Dedicate 30 minutes this week to learning about retrieval practice and spaced repetition."
-                },
-                D: {
-                    title: "Protect Your Peak Energy Hours",
-                    text: "Identify your 2-3 highest energy hours daily and schedule only demanding tasks then."
-                },
-                E: {
-                    title: "Create a Plan B for Every Study Session",
-                    text: "For each scheduled session, have a 15-minute alternative ready if conditions change."
-                }
-            };
-            
-            if (highSectionActions[profile.highestSection]) {
-                actions.push(highSectionActions[profile.highestSection]);
-            }
-            
-            // Based on total score
-            if (profile.totalScore > 50) {
-                actions.push({
-                    title: "Schedule a Weekly Rebuild Session",
-                    text: "Every Sunday, spend 20 minutes rebuilding your week based on that week's specific demands."
+                    `;
+                    
+                    // Add event listener to radio buttons
+                    const radios = row.querySelectorAll('input[type="radio"]');
+                    radios.forEach(radio => {
+                        radio.addEventListener('change', function() {
+                            updateScore(section, questionNum, parseInt(this.value));
+                            updateProgress();
+                        });
+                    });
+                    
+                    container.appendChild(row);
                 });
             }
             
-            if (profile.percentages.D > 60) {
-                actions.push({
-                    title: "Implement the 45-Minute Rule",
-                    text: "No pre-lab study session longer than 45 minutes. Break longer tasks across multiple days."
-                });
+            // Load saved progress if available
+            loadProgress();
+        }
+        
+        // Calculate question number across all sections
+        function getQuestionNumber(section, index) {
+            const sectionOffsets = { A: 1, B: 8, C: 13, D: 17, E: 22 };
+            return sectionOffsets[section] + index;
+        }
+        
+        // Update score for a section
+        function updateScore(section, questionNum, value) {
+            // Store answer
+            answers[questionNum] = value;
+            
+            // Recalculate section score
+            let sectionScore = 0;
+            const startQ = section === 'A' ? 1 : 
+                          section === 'B' ? 8 :
+                          section === 'C' ? 13 :
+                          section === 'D' ? 17 : 22;
+            const endQ = startQ + questions[section].length - 1;
+            
+            for (let q = startQ; q <= endQ; q++) {
+                sectionScore += answers[q] || 0;
             }
             
-            // Build HTML
-            let html = '';
-            actions.forEach((action, index) => {
-                html += `
-                    <div class="action-item">
-                        <div class="action-number">${index + 1}</div>
-                        <div class="action-content">
-                            <h4>${action.title}</h4>
-                            <p>${action.text}</p>
+            scores[section] = sectionScore;
+            document.getElementById(`score${section}`).textContent = sectionScore;
+        }
+        
+        // Update progress bar and counters
+        function updateProgress() {
+            // Calculate answered questions
+            let answered = 0;
+            let total = 25; // Total questions
+            
+            for (let i = 1; i <= total; i++) {
+                if (answers[i] !== undefined) answered++;
+            }
+            
+            // Update progress bar
+            const progressPercent = (answered / total) * 100;
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            document.getElementById('questionsComplete').textContent = answered;
+            
+            // Show/hide results button
+            if (answered === total) {
+                document.getElementById('viewResults').classList.remove('hidden');
+                document.getElementById('nextSection').classList.add('hidden');
+            } else {
+                document.getElementById('viewResults').classList.add('hidden');
+                document.getElementById('nextSection').classList.remove('hidden');
+            }
+        }
+        
+        // Navigate between sections
+        function navigateToSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(`section${section}`).classList.remove('hidden');
+            
+            // Update active nav
+            document.querySelectorAll('.section-nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === section) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Update current section
+            currentSection = section;
+            document.getElementById('currentSection').textContent = section;
+            
+            // Update button states
+            document.getElementById('prevSection').disabled = (section === 'A');
+            
+            // Scroll to top of questions area
+            document.getElementById('questionsArea').scrollTop = 0;
+        }
+        
+        // Save progress to localStorage
+        function saveProgress() {
+            const progress = {
+                scores: scores,
+                answers: answers,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('uwpScheduleDiagnostic', JSON.stringify(progress));
+            
+            // Show temporary confirmation
+            const btn = document.getElementById('saveProgress');
+            const originalText = btn.textContent;
+            btn.textContent = 'Saved!';
+            btn.style.background = 'var(--uwp-accent)';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 1500);
+        }
+        
+        // Load progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('uwpScheduleDiagnostic');
+            if (saved) {
+                try {
+                    const progress = JSON.parse(saved);
+                    scores = progress.scores || scores;
+                    answers = progress.answers || answers;
+                    
+                    // Restore radio button states
+                    for (const [questionNum, value] of Object.entries(answers)) {
+                        const radio = document.querySelector(`input[name="q${questionNum}"][value="${value}"]`);
+                        if (radio) {
+                            radio.checked = true;
+                        }
+                    }
+                    
+                    // Update displays
+                    updateProgress();
+                    for (const section in scores) {
+                        document.getElementById(`score${section}`).textContent = scores[section];
+                    }
+                } catch (e) {
+                    console.error('Error loading saved progress:', e);
+                }
+            }
+        }
+        
+        // Clear current section
+        function clearCurrentSection() {
+            if (confirm(`Clear all answers in Section ${currentSection}?`)) {
+                const startQ = currentSection === 'A' ? 1 : 
+                              currentSection === 'B' ? 8 :
+                              currentSection === 'C' ? 13 :
+                              currentSection === 'D' ? 17 : 22;
+                const endQ = startQ + questions[currentSection].length - 1;
+                
+                for (let q = startQ; q <= endQ; q++) {
+                    delete answers[q];
+                    const radios = document.querySelectorAll(`input[name="q${q}"]`);
+                    radios.forEach(radio => radio.checked = false);
+                }
+                
+                scores[currentSection] = 0;
+                document.getElementById(`score${currentSection}`).textContent = '0';
+                updateProgress();
+            }
+        }
+        
+        // Show results page
+        function showResults() {
+            document.getElementById('mainDiagnostic').classList.add('hidden');
+            document.querySelector('.button-container').classList.add('hidden');
+            document.getElementById('resultsPage').classList.remove('hidden');
+            
+            // Generate personalized results
+            generatePersonalizedResults();
+        }
+        
+        // Generate personalized results (simplified version for now)
+        function generatePersonalizedResults() {
+            const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+            
+            // Determine primary challenge
+            let highestScore = 0;
+            let primaryChallenge = '';
+            for (const section in scores) {
+                if (scores[section] > highestScore) {
+                    highestScore = scores[section];
+                    primaryChallenge = section;
+                }
+            }
+            
+            const challengeNames = {
+                A: 'Time Volatility & External Constraints',
+                B: 'Planning & Time Estimation Skills',
+                C: 'Study Strategies & Academic Know-How',
+                D: 'Motivation, Attention, & Mental Load',
+                E: 'Access, Identity, & Learning Differences'
+            };
+            
+            // Create results HTML
+            const resultsHTML = `
+                <div style="padding:15px;">
+                    <h2 style="color:var(--uwp-primary); border-bottom:2px solid var(--uwp-primary); padding-bottom:10px; margin-bottom:15px;">
+                        Your Personal Scheduling Analysis
+                    </h2>
+                    
+                    <div style="background:#f8f9fa; padding:15px; border-radius:4px; margin-bottom:15px;">
+                        <h3 style="color:var(--uwp-primary); margin-bottom:10px;">📊 Your Scores Summary</h3>
+                        <p>Total Score: <strong>${totalScore}/72</strong></p>
+                        <p>Primary Challenge Area: <strong>${challengeNames[primaryChallenge]}</strong></p>
+                    </div>
+                    
+                    <div style="margin-bottom:15px;">
+                        <h3 style="color:var(--uwp-primary); margin-bottom:10px;">🎯 Personalized Insight</h3>
+                        <p>Based on your responses, your main scheduling challenge is <strong>${challengeNames[primaryChallenge].toLowerCase()}</strong>. This means standard scheduling advice might not work well for you.</p>
+                        
+                        <div style="background:#FFF3CD; padding:10px; border-left:4px solid #FFC107; margin:10px 0;">
+                            <strong>Key Takeaway:</strong> Your scheduling struggles are likely due to a <em>system mismatch</em>, not a personal flaw. You need a system designed for your specific constraints.
                         </div>
                     </div>
-                `;
-            });
-            
-            container.innerHTML = html;
-        }
-        
-        function generateLabDesign() {
-            const profile = window.userProfile;
-            
-            // Pre-lab design based on planning and strategy scores
-            let preLabTime = "45 minutes Monday";
-            let preLabStrategy = "Active reading of lab protocol, identifying key terms";
-            
-            if (profile.percentages.B > 60) {
-                preLabTime = "30 min Sunday + 30 min Monday";
-                preLabStrategy = "Distributed preparation: skim Sunday, detailed prep Monday";
-            }
-            
-            if (profile.percentages.C > 60) {
-                preLabStrategy = "Focus on understanding WHY procedures matter, not just WHAT to do";
-            }
-            
-            // In-lab design based on attention scores
-            let inLabStrategy = "Focus on data collection, annotate as you go, flag confusing steps";
-            if (profile.percentages.D > 60) {
-                inLabStrategy = "Focus ONLY on data collection. Mark 'review later' for anything confusing. No multitasking.";
-            }
-            
-            // Post-lab design based on time volatility
-            let postLabTime = "20 min Tuesday + 45 min Wednesday";
-            let postLabStrategy = "Tuesday: organize data, Wednesday: analyze and connect to concepts";
-            
-            if (profile.percentages.A > 60) {
-                postLabTime = "Flexible: 15-30 min within 24 hours of lab";
-                postLabStrategy = "Light processing immediately, deeper analysis when schedule allows";
-            }
-            
-            if (profile.percentages.D > 70) {
-                postLabTime = "15 min Tuesday only";
-                postLabStrategy = "Just organize data Tuesday. Schedule analysis for Wednesday morning when refreshed.";
-            }
-            
-            // Update DOM
-            document.getElementById('preLabTime').textContent = preLabTime;
-            document.getElementById('preLabStrategy').textContent = preLabStrategy;
-            document.getElementById('inLabStrategy').textContent = inLabStrategy;
-            document.getElementById('postLabTime').textContent = postLabTime;
-            document.getElementById('postLabStrategy').textContent = postLabStrategy;
-        }
-        
-        function generateVisualization() {
-            const profile = window.userProfile;
-            const container = document.getElementById('comparisonViz');
-            const sectionNames = ['Time', 'Planning', 'Strategy', 'Focus', 'Access'];
-            const averageScores = [12, 7, 6, 8, 6]; // Typical student averages
-            
-            let html = '';
-            
-            Object.keys(profile.scores).forEach((section, index) => {
-                const score = profile.scores[section];
-                const average = averageScores[index];
-                const max = sectionMaxScores[section];
-                
-                // Calculate heights (max 100px)
-                const yourHeight = (score / max) * 100;
-                const avgHeight = (average / max) * 100;
-                
-                // Determine color based on comparison
-                const color = score > average ? '#D44500' : '#00703C';
-                
-                html += `
-                    <div class="viz-column">
-                        <div class="viz-bar" style="height: ${yourHeight}px; background-color: ${color};"></div>
-                        <div class="viz-label">${sectionNames[index]}</div>
-                        <div class="viz-value">You: ${score}</div>
-                        <div class="viz-value" style="color: #999;">Avg: ${average}</div>
+                    
+                    <div style="margin-bottom:15px;">
+                        <h3 style="color:var(--uwp-primary); margin-bottom:10px;">🚀 Recommended Actions</h3>
+                        <ul style="padding-left:20px;">
+                            <li style="margin-bottom:5px;">Focus on building flexibility into your schedule</li>
+                            <li style="margin-bottom:5px;">Anchor your week around your Tuesday lab (2:00-4:50)</li>
+                            <li style="margin-bottom:5px;">Use the lab-centered design principles</li>
+                        </ul>
                     </div>
-                `;
-            });
+                    
+                    <div style="text-align:center; margin-top:20px;">
+                        <button class="btn" onclick="window.location.reload()">Retake Diagnostic</button>
+                        <button class="btn-success" onclick="saveProgress()">Save My Results</button>
+                    </div>
+                </div>
+            `;
             
-            container.innerHTML = html;
+            document.getElementById('resultsPage').innerHTML = resultsHTML;
         }
         
-        // Replace the original showResults call with enhanced version
-        // In your existing event listeners:
-        document.getElementById('viewResults')?.addEventListener('click', showEnhancedResults);
-        
-        // Add download functionality
-        document.getElementById('downloadPersonalPlan')?.addEventListener('click', function() {
-            alert('Personal Plan PDF would include:\n1. Your personalized insights\n2. Action plan\n3. Lab-centered schedule\n4. Score analysis\n\nImplementation would use jsPDF library.');
-        });
-        
-        document.getElementById('scheduleAdvisorMeeting')?.addEventListener('click', function() {
-            alert('This would integrate with your campus advising scheduling system.');
-        });
-        
-        document.getElementById('retakeDiagnosticBtn')?.addEventListener('click', function() {
-            if (confirm('Retake diagnostic? Your current results will be cleared.')) {
-                localStorage.removeItem('uwpScheduleDiagnostic');
-                location.reload();
-            }
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            generateQuestions();
+            updateProgress();
+            
+            // Section navigation
+            document.querySelectorAll('.section-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navigateToSection(this.dataset.section);
+                });
+            });
+            
+            // Next/Previous buttons
+            document.getElementById('nextSection').addEventListener('click', function() {
+                const nextSection = String.fromCharCode(currentSection.charCodeAt(0) + 1);
+                if (nextSection <= 'E') {
+                    navigateToSection(nextSection);
+                }
+            });
+            
+            document.getElementById('prevSection').addEventListener('click', function() {
+                const prevSection = String.fromCharCode(currentSection.charCodeAt(0) - 1);
+                if (prevSection >= 'A') {
+                    navigateToSection(prevSection);
+                }
+            });
+            
+            // Action buttons
+            document.getElementById('saveProgress').addEventListener('click', saveProgress);
+            document.getElementById('clearSection').addEventListener('click', clearCurrentSection);
+            document.getElementById('viewResults').addEventListener('click', showResults);
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Ctrl+S to save
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    saveProgress();
+                }
+                // Number keys 1-5 to navigate sections
+                if (e.key >= '1' && e.key <= '5') {
+                    const sections = ['A', 'B', 'C', 'D', 'E'];
+                    navigateToSection(sections[parseInt(e.key) - 1]);
+                }
+            });
         });
     </script>
 </body>
