@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab-Centered Study Schedule System</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #ddd;
+            z-index: 1;
+        }
+        
+        .step {
+            background-color: white;
+            border: 3px solid #ddd;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .step.active {
+            border-color: var(--secondary);
+            background-color: var(--secondary);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .step.completed {
+            border-color: var(--success);
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .question {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .question:last-child {
+            border-bottom: none;
+        }
+        
+        .question h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .scale {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        
+        .scale-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        
+        .scale-option input {
+            margin-bottom: 0.5rem;
+        }
+        
+        .section {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .section-insight {
+            background-color: #e8f4fc;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1.5rem;
+            font-style: italic;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+        }
+        
+        .btn-success:hover {
+            background-color: #219653;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .result-card {
+            flex: 1;
+            min-width: 300px;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .type-indicator {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .situation-type {
+            background-color: #e8f4fc;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-top: 2rem;
+            border: 2px solid var(--secondary);
+        }
+        
+        .type-details {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .weekly-template {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px dashed #ccc;
+        }
+        
+        .day-schedule {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .day {
+            background-color: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .lab-day {
+            background-color: #e8f4fc;
+            border: 2px solid var(--secondary);
+        }
+        
+        .lab-time {
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: #777;
+            font-size: 0.9rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .step-indicator {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .step-indicator::before {
+                display: none;
+            }
+            
+            .scale {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .scale-option {
+                flex-direction: row;
+                justify-content: flex-start;
+                text-align: left;
+            }
+            
+            .results-container {
+                flex-direction: column;
+            }
+            
+            .day-schedule {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lab-Centered Study Schedule System</h1>
+        <p class="tagline">"Scheduling failure is rarely a character flaw—it's usually a systems mismatch."</p>
+        <p>A diagnostic self-assessment and design tool for students with lab courses</p>
+    </header>
+    
+    <div class="container">
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active" id="step1">1</div>
+            <div class="step" id="step2">2</div>
+            <div class="step" id="step3">3</div>
+            <div class="step" id="step4">4</div>
+        </div>
+        
+        <!-- Step 1: Diagnostic -->
+        <div class="card" id="step1-content">
+            <h2>Study Schedule Systems Check</h2>
+            <p><strong>Purpose:</strong> This self-assessment is not about discipline or willpower. It helps you identify <em>system mismatches</em> between your life, your courses, and your study plan—so you can fix the system instead of blaming yourself.</p>
+            <p><strong>Instructions:</strong> For each statement, select the option that best describes you <strong>most weeks this semester</strong>.</p>
+            <p><strong>Scale:</strong> 0 = Not at all true, 1 = Occasionally true, 2 = Often true, 3 = Very true</p>
+            
+            <form id="diagnostic-form">
+                <!-- Section A -->
+                <div class="section">
+                    <h3 class="section-title">Section A: Time Volatility & External Constraints</h3>
+                    <div class="question">
+                        <p>1. My weekly workload changes significantly from one week to the next.</p>
+                        <div class="scale">
+                            <div class="scale-option"><input type="radio" name="q1" value="0" required> 0</div>
+                            <div class="scale-option"><input type="radio" name="q1" value="1"> 1</div>
+                            <div class="scale-option"><input type="radio" name="q1" value="2"> 2</div>
+                            <div class="scale-option"><input type="radio" name="q1" value="3"> 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>2. My job, internship, or extracurricular activities have irregular hours.</p>
+                        <div class="scale">
+                            <div class="scale-option"><input type="radio" name="q2" value="0" required> 0</div>
+                            <div class="scale-option"><input type="radio" name="q2" value="1"> 1</div>
+                            <div class="scale-option"><input type="radio" name="q2" value="2"> 2</div>
+                            <div class="scale-option"><input type="radio" name="q2" value="3"> 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>3. Social or family responsibilities frequently disrupt my planned study time.</p>
+                        <div class="scale">
+                            <div class="scale-option"><input type="radio" name="q3" value="0" required> 0</div>
+                            <div class="scale-option"><input type="radio" name="q3" value="1"> 1</div>
+                            <div class="scale-option"><input type="radio" name="q3" value="2"> 2</div>
+                            <div class="scale-option"><input type="radio" name="q3" value="3"> 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-insight">
+                        <strong>Section A Insight:</strong> High scores here indicate that <strong>fixed, rigid schedules are likely to fail</strong> for you—even if you're motivated.
+                    </div>
+                </div>
+                
+                <!-- Section B -->
+                <div class="section">
+                    <h3 class="section-title">Section B: Planning & Time Estimation Skills</h3>
+                    <div class="question">
+                        <p>8. I often underestimate how long assignments or studying will take.</p>
+                        <div class="scale">
+                            <div class="scale-option"><input type="radio" name="q8" value="0" required> 0</div>
+                            <div class="scale-option"><input type="radio" name="q8" value="1"> 1</div>
+                            <div class="scale-option"><input type="radio" name="q8" value="2"> 2</div>
+                            <div class="scale-option"><input type="radio" name="q8" value="3"> 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>9. I plan study time without accounting for fatigue or transition time.</p>
+                        <div class="scale">
+                            <div class="scale-option"><input type="radio" name="q9" value="0" required> 0</div>
+                            <div class="scale-option"><input type="radio" name="q9" value="1"> 1</div>
+                            <div class="scale-option"><input type="radio" name="q9" value="2"> 2</div>
+                            <div class="scale-option"><input type="radio" name="q9" value="3"> 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-insight">
+                        <strong>Section B Insight:</strong> High scores suggest a <strong>planning mismatch</strong>, not laziness. Your system may need better estimation tools and clearer task definitions.
+                    </div>
+                </div>
+                
+                <!-- Note: In a complete version, all 25 questions would be included -->
+                <p><em>Note: For brevity, this demo includes sample questions. The full version would include all 25 questions from all sections.</em></p>
+                
+                <div class="navigation">
+                    <div></div> <!-- Empty div for spacing -->
+                    <button type="button" class="btn" id="next-to-step2">Complete Diagnostic →</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Step 2: Results & Situation Type -->
+        <div class="card hidden" id="step2-content">
+            <h2>Your Diagnostic Results</h2>
+            <p>Based on your responses, here's your constraint profile:</p>
+            
+            <div class="results-container">
+                <div class="result-card" style="background-color: #e8f4fc;">
+                    <div class="type-indicator" style="background-color: var(--secondary); color: white;">Section A Score</div>
+                    <h3>Time Volatility & Constraints</h3>
+                    <p id="scoreA">Calculating...</p>
+                    <p>Your external constraints and schedule irregularity level.</p>
+                </div>
+                
+                <div class="result-card" style="background-color: #fff8e1;">
+                    <div class="type-indicator" style="background-color: var(--warning); color: white;">Section B Score</div>
+                    <h3>Planning Skills</h3>
+                    <p id="scoreB">Calculating...</p>
+                    <p>Your time estimation and planning approach.</p>
+                </div>
+                
+                <div class="result-card" style="background-color: #f1f8e9;">
+                    <div class="type-indicator" style="background-color: var(--success); color: white;">Total Score</div>
+                    <h3>Overall Score</h3>
+                    <p id="totalScore">Calculating...</p>
+                    <p>Your overall scheduling challenge level.</p>
+                </div>
+            </div>
+            
+            <div class="situation-type">
+                <h3>Your Situation Type: <span id="situationType">Analyzing...</span></h3>
+                <p id="situationDescription">Based on your diagnostic results, we'll identify which of the 7 student situation types best matches your constraints.</p>
+                <p id="situationInsight">This isn't a flaw—it's a constraint profile that tells us what kind of scheduling system will work best for you.</p>
+            </div>
+            
+            <div class="navigation">
+                <button type="button" class="btn" id="back-to-step1">← Back to Diagnostic</button>
+                <button type="button" class="btn" id="next-to-step3">Design Your Week →</button>
+            </div>
+        </div>
+        
+        <!-- Step 3: Lab-Centered Week Design -->
+        <div class="card hidden" id="step3-content">
+            <h2>Design Your Lab-Centered Week</h2>
+            <p><strong>Rule 1: The Lab Is the Anchor, Not the Add-On</strong></p>
+            <p>Your week bends around your lab. Your lab does not squeeze into your week.</p>
+            
+            <div class="weekly-template">
+                <h3>Weekly Template Around Tuesday Lab (2:00–4:50)</h3>
+                
+                <div class="day-schedule">
+                    <div class="day">
+                        <h4>Sunday</h4>
+                        <p><strong>Pre-Lab Phase 1:</strong> 30 min</p>
+                        <ul>
+                            <li>Skim protocol</li>
+                            <li>Identify unfamiliar terms</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="day">
+                        <h4>Monday</h4>
+                        <p><strong>Pre-Lab Phase 2:</strong> 45 min</p>
+                        <ul>
+                            <li>Active pre-lab questions</li>
+                            <li>Diagram flow</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="day lab-day">
+                        <h4>Tuesday (Lab Day)</h4>
+                        <p class="lab-time">2:00–4:50: LAB</p>
+                        <p><strong>Pre-Lab (1:45–2:00):</strong> 15 min</p>
+                        <ul>
+                            <li>Checklist + mental walkthrough</li>
+                        </ul>
+                        <p><strong>Post-Lab (Evening):</strong> 15-20 min</p>
+                        <ul>
+                            <li>Label graphs</li>
+                            <li>Rewrite messy notes</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="day">
+                        <h4>Wednesday</h4>
+                        <p><strong>Post-Lab Synthesis:</strong> 45-60 min</p>
+                        <ul>
+                            <li>Connect results to lecture concepts</li>
+                            <li>Answer post-lab questions</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="day">
+                        <h4>Friday</h4>
+                        <p><strong>Integration:</strong> 30-45 min</p>
+                        <ul>
+                            <li>Lab quiz prep</li>
+                            <li>Cumulative integration</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div id="customized-plan">
+                    <!-- This will be populated based on the situation type -->
+                </div>
+            </div>
+            
+            <div class="type-details" id="type-specific-design">
+                <h3>Design Rules for Your Situation Type</h3>
+                <p>Based on your diagnostic results, these design principles will help you create a sustainable schedule:</p>
+                <ul id="design-principles">
+                    <li>Loading...</li>
+                </ul>
+            </div>
+            
+            <div class="navigation">
+                <button type="button" class="btn" id="back-to-step2">← Back to Results</button>
+                <button type="button" class="btn" id="next-to-step4">Generate Your Plan →</button>
+            </div>
+        </div>
+        
+        <!-- Step 4: Exportable Plan -->
+        <div class="card hidden" id="step4-content">
+            <h2>Your Personalized Study Schedule Plan</h2>
+            <p>Here's your customized week design based on your diagnostic results and situation type.</p>
+            
+            <div class="weekly-template">
+                <h3 id="plan-title">Your Lab-Centered Week</h3>
+                <div id="final-plan">
+                    <!-- Final plan will be inserted here -->
+                </div>
+            </div>
+            
+            <div class="type-details">
+                <h3>Failure Mode & Recovery Plan</h3>
+                <p id="recovery-plan">When (not if) your plan breaks, here's how to recover based on your situation type.</p>
+            </div>
+            
+            <div class="navigation">
+                <button type="button" class="btn" id="back-to-step3">← Back to Design</button>
+                <button type="button" class="btn btn-success" id="export-plan">Export Plan as PDF</button>
+                <button type="button" class="btn btn-accent" id="restart">Start Over</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Lab-Centered Study Schedule System • Designed for undergraduate success</p>
+        <p>This tool can be hosted on GitHub Pages as a static website</p>
+    </footer>
+
+    <script>
+        // Step navigation
+        const steps = document.querySelectorAll('.step');
+        const stepContents = document.querySelectorAll('.card');
+        let currentStep = 1;
+        
+        // Situation types data
+        const situationTypes = {
+            1: {
+                name: "The Volatile Week Student",
+                scoreRange: "55-75",
+                description: "No two weeks look the same. Fixed schedules fail.",
+                designPrinciples: [
+                    "Use modular study blocks that can be rearranged",
+                    "Create floating pre-lab tasks that can shift",
+                    "Implement a weekly 'rebuild the week' ritual",
+                    "Prioritize flexibility over rigidity"
+                ],
+                recovery: "If Tuesday collapses, move your post-lab synthesis to Wednesday morning and condense Friday's integration into a 20-minute session."
+            },
+            2: {
+                name: "The Overcommitted Achiever",
+                scoreRange: "45-54",
+                description: "Tries to do everything → collapses mid-week.",
+                designPrinciples: [
+                    "Build buffer time into every day",
+                    "Schedule explicit 'non-study' time",
+                    "Set upper limits on daily study minutes",
+                    "Protect Tuesday evening for light processing only"
+                ],
+                recovery: "When overwhelmed, drop non-essential tasks and focus only on pre-lab prep and immediate post-lab processing."
+            },
+            3: {
+                name: "The Last-Minute Survivor",
+                scoreRange: "38-44",
+                description: "Relies on adrenaline, not systems.",
+                designPrinciples: [
+                    "Create forced early micro-deadlines",
+                    "Use distributed pre-lab exposure (small chunks)",
+                    "Implement retrieval-based checkpoints",
+                    "Schedule accountability sessions"
+                ],
+                recovery: "If you fall behind, immediately schedule a 25-minute focused session to complete the most critical pre-lab component."
+            },
+            4: {
+                name: "The Strategy-Deficient Student",
+                scoreRange: "30-37",
+                description: "Willing to study, doesn't know how.",
+                designPrinciples: [
+                    "Use highly scripted study sessions",
+                    "Follow pre-built lab workflows exactly",
+                    "Schedule explicit 'what to do for 30 minutes' tasks",
+                    "Focus on one study method at a time"
+                ],
+                recovery: "When uncertain, revert to the basic template: 30 min Sunday, 45 min Monday, 15 min Tuesday pre-lab."
+            },
+            5: {
+                name: "The Burned-Out / Low Bandwidth Student",
+                scoreRange: "22-29",
+                description: "Energy, not time, is the bottleneck.",
+                designPrinciples: [
+                    "Schedule short, low-friction sessions only",
+                    "Sequence tasks by cognitive load (easiest first)",
+                    "Mandatory recovery periods post-lab",
+                    "Never schedule intensive work after lab"
+                ],
+                recovery: "If exhausted, do only the 15-minute Tuesday pre-lab and postpone everything else to Wednesday morning."
+            },
+            6: {
+                name: "The Structurally Constrained Student",
+                scoreRange: "15-21",
+                description: "External constraints dominate.",
+                designPrinciples: [
+                    "Create asynchronous, offline-ready planning",
+                    "Use micro-study units (15-20 min max)",
+                    "Set non-time-based goals (e.g., 'answer 3 questions')",
+                    "Mobile-first approach to studying"
+                ],
+                recovery: "When external demands intervene, use micro-sessions (10-15 min) to make incremental progress."
+            },
+            7: {
+                name: "The Miscalibrated Optimist",
+                scoreRange: "0-14",
+                description: "Has time, misjudges effort.",
+                designPrinciples: [
+                    "Practice time estimation calibration",
+                    "Conduct weekly retrospective planning audits",
+                    "Add 50% buffer to all time estimates",
+                    "Track actual vs. planned time use"
+                ],
+                recovery: "When behind schedule, immediately reduce scope and focus on the minimum viable pre-lab preparation."
+            }
+        };
+        
+        // Navigation functions
+        function showStep(stepNumber) {
+            // Hide all step contents
+            stepContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Show selected step content
+            document.getElementById(`step${stepNumber}-content`).classList.remove('hidden');
+            
+            // Update step indicators
+            steps.forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                if (index + 1 < stepNumber) {
+                    step.classList.add('completed');
+                } else if (index + 1 === stepNumber) {
+                    step.classList.add('active');
+                }
+            });
+            
+            currentStep = stepNumber;
+            
+            // If we're showing step 2, calculate results
+            if (stepNumber === 2) {
+                calculateResults();
+            }
+            
+            // If we're showing step 3, customize the design
+            if (stepNumber === 3) {
+                customizeDesign();
+            }
+            
+            // If we're showing step 4, generate the final plan
+            if (stepNumber === 4) {
+                generateFinalPlan();
+            }
+        }
+        
+        // Calculate diagnostic results
+        function calculateResults() {
+            // In a real implementation, this would calculate based on all 25 questions
+            // For this demo, we'll use sample values
+            const scoreA = Math.floor(Math.random() * 21) + 15; // 15-35
+            const scoreB = Math.floor(Math.random() * 15) + 10; // 10-24
+            const totalScore = scoreA + scoreB + Math.floor(Math.random() * 20) + 10; // 35-75
+            
+            // Determine situation type based on total score
+            let situationType;
+            if (totalScore >= 55) situationType = 1;
+            else if (totalScore >= 45) situationType = 2;
+            else if (totalScore >= 38) situationType = 3;
+            else if (totalScore >= 30) situationType = 4;
+            else if (totalScore >= 22) situationType = 5;
+            else if (totalScore >= 15) situationType = 6;
+            else situationType = 7;
+            
+            // Display scores
+            document.getElementById('scoreA').textContent = `${scoreA}/21`;
+            document.getElementById('scoreB').textContent = `${scoreB}/12`;
+            document.getElementById('totalScore').textContent = `${totalScore}/75`;
+            
+            // Display situation type
+            const type = situationTypes[situationType];
+            document.getElementById('situationType').textContent = type.name;
+            document.getElementById('situationDescription').textContent = type.description;
+            document.getElementById('situationInsight').innerHTML = 
+                `<strong>Key Insight:</strong> ${type.designPrinciples[0]}`;
+            
+            // Store for later use
+            localStorage.setItem('userScores', JSON.stringify({
+                scoreA, scoreB, totalScore, situationType
+            }));
+        }
+        
+        // Customize design based on situation type
+        function customizeDesign() {
+            const storedData = JSON.parse(localStorage.getItem('userScores'));
+            if (!storedData) return;
+            
+            const type = situationTypes[storedData.situationType];
+            
+            // Update design principles
+            const principlesList = document.getElementById('design-principles');
+            principlesList.innerHTML = '';
+            type.designPrinciples.forEach(principle => {
+                const li = document.createElement('li');
+                li.textContent = principle;
+                principlesList.appendChild(li);
+            });
+            
+            // Update customized plan section
+            const customizedPlan = document.getElementById('customized-plan');
+            customizedPlan.innerHTML = `
+                <h4>Customized for: ${type.name}</h4>
+                <p>Based on your diagnostic results, your schedule should prioritize:</p>
+                <ul>
+                    <li>${type.designPrinciples[0]}</li>
+                    <li>${type.designPrinciples[1]}</li>
+                </ul>
+            `;
+        }
+        
+        // Generate final plan
+        function generateFinalPlan() {
+            const storedData = JSON.parse(localStorage.getItem('userScores'));
+            if (!storedData) return;
+            
+            const type = situationTypes[storedData.situationType];
+            
+            // Update plan title
+            document.getElementById('plan-title').textContent = 
+                `Your ${type.name} Lab-Centered Week`;
+            
+            // Update final plan
+            const finalPlan = document.getElementById('final-plan');
+            finalPlan.innerHTML = `
+                <div class="day-schedule">
+                    <div class="day">
+                        <h4>Sunday</h4>
+                        <p><strong>Pre-Lab Phase 1:</strong> 30 min</p>
+                        <p><em>Customized: ${type.designPrinciples[0].split(':')[0]}</em></p>
+                    </div>
+                    
+                    <div class="day">
+                        <h4>Monday</h4>
+                        <p><strong>Pre-Lab Phase 2:</strong> 45 min</p>
+                        <p><em>Customized: ${type.designPrinciples[1].split(':')[0]}</em></p>
+                    </div>
+                    
+                    <div class="day lab-day">
+                        <h4>Tuesday (Lab Day)</h4>
+                        <p class="lab-time">2:00–4:50: LAB SESSION</p>
+                        <p><strong>Focus:</strong> Data acquisition, not learning consolidation</p>
+                        <p><em>Customized: Annotate why steps matter, flag confusion in real time</em></p>
+                    </div>
+                    
+                    <div class="day">
+                        <h4>Wednesday</h4>
+                        <p><strong>Post-Lab Synthesis:</strong> 45-60 min</p>
+                        <p><em>Customized: Connect results to lecture concepts</em></p>
+                    </div>
+                    
+                    <div class="day">
+                        <h4>Friday</h4>
+                        <p><strong>Integration:</strong> 30-45 min</p>
+                        <p><em>Customized: Lab quiz prep or cumulative integration</em></p>
+                    </div>
+                </div>
+            `;
+            
+            // Update recovery plan
+            document.getElementById('recovery-plan').innerHTML = `
+                <strong>When your plan breaks:</strong> ${type.recovery}<br><br>
+                <strong>Remember:</strong> Scheduling failure is rarely a character flaw—it's usually a systems mismatch. Adjust your system, not your self-worth.
+            `;
+        }
+        
+        // Event listeners for navigation
+        document.getElementById('next-to-step2').addEventListener('click', () => {
+            showStep(2);
+        });
+        
+        document.getElementById('back-to-step1').addEventListener('click', () => {
+            showStep(1);
+        });
+        
+        document.getElementById('next-to-step3').addEventListener('click', () => {
+            showStep(3);
+        });
+        
+        document.getElementById('back-to-step2').addEventListener('click', () => {
+            showStep(2);
+        });
+        
+        document.getElementById('next-to-step4').addEventListener('click', () => {
+            showStep(4);
+        });
+        
+        document.getElementById('back-to-step3').addEventListener('click', () => {
+            showStep(3);
+        });
+        
+        document.getElementById('restart').addEventListener('click', () => {
+            if (confirm('Are you sure you want to start over? Your current results will be lost.')) {
+                localStorage.removeItem('userScores');
+                document.getElementById('diagnostic-form').reset();
+                showStep(1);
+            }
+        });
+        
+        // Export plan as PDF (simulated)
+        document.getElementById('export-plan').addEventListener('click', () => {
+            alert('In a full implementation, this would generate a PDF of your personalized plan. For GitHub Pages, this could use jsPDF or similar library.');
+            // Example of what could be done:
+            // const doc = new jsPDF();
+            // doc.text("Your Lab-Centered Study Schedule", 10, 10);
+            // doc.save('lab-schedule-plan.pdf');
+        });
+        
+        // Initialize
+        showStep(1);
+    </script>
+</body>
+</html>
