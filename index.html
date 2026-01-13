@@ -3,879 +3,951 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab-Centered Study Schedule System</title>
+    <title>Lab Schedule Diagnostic | UW-Parkside</title>
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
-            --success: #27ae60;
-            --warning: #f39c12;
-            --border-radius: 8px;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --uwp-primary: #005596; /* UW System Blue */
+            --uwp-secondary: #C5C9D2; /* Gray */
+            --uwp-accent: #00703C; /* Green */
+            --uwp-dark: #002F5F; /* Dark Blue */
+            --uwp-light: #F2F2F2; /* Light Gray */
+            --uwp-text: #333333; /* Dark Text */
+            --uwp-text-light: #666666; /* Medium Text */
+            --uwp-border: #D0D0D0; /* Border Gray */
+            --uwp-hover: #003B73; /* Hover Blue */
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
         }
         
         body {
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .tagline {
-            font-size: 1.2rem;
-            font-style: italic;
-            opacity: 0.9;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--accent);
-            padding-left: 1rem;
+            background-color: var(--uwp-light);
+            color: var(--uwp-text);
+            line-height: 1.3;
+            font-size: 13px;
+            padding: 5px;
         }
         
         .container {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-        
-        .card {
+            max-width: 1200px;
+            margin: 0 auto;
             background: white;
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 1rem;
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
         
-        .step-indicator {
+        /* UWP Header */
+        .uwp-header {
+            background: linear-gradient(to right, var(--uwp-primary), var(--uwp-dark));
+            color: white;
+            padding: 10px 15px;
+            border-bottom: 3px solid var(--uwp-accent);
+        }
+        
+        .uwp-header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .uwp-header p {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 3px;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            padding: 8px 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid var(--uwp-border);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--uwp-light);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--uwp-accent);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .progress-text {
+            font-size: 11px;
+            color: var(--uwp-text-light);
+            text-align: right;
+            margin-top: 2px;
+        }
+        
+        /* Compact Diagnostic Layout */
+        .diagnostic-container {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            position: relative;
+            min-height: 500px;
         }
         
-        .step-indicator::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background-color: #ddd;
-            z-index: 1;
+        /* Sections Sidebar - Fixed */
+        .sections-sidebar {
+            width: 180px;
+            background: var(--uwp-light);
+            border-right: 1px solid var(--uwp-border);
+            padding: 10px 0;
+            flex-shrink: 0;
         }
         
-        .step {
-            background-color: white;
-            border: 3px solid #ddd;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
+        .section-nav {
+            list-style: none;
+        }
+        
+        .section-nav li {
+            margin: 0;
+        }
+        
+        .section-nav a {
+            display: block;
+            padding: 6px 10px;
+            color: var(--uwp-text);
+            text-decoration: none;
+            font-size: 12px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .section-nav a:hover {
+            background: rgba(0, 85, 150, 0.05);
+        }
+        
+        .section-nav a.active {
+            background: rgba(0, 85, 150, 0.1);
+            border-left-color: var(--uwp-primary);
+            font-weight: 600;
+            color: var(--uwp-primary);
+        }
+        
+        /* Questions Area - Scrollable */
+        .questions-area {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 500px;
+            padding: 10px;
+        }
+        
+        .section {
+            margin-bottom: 15px;
+            border: 1px solid var(--uwp-border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--uwp-border);
+            font-weight: 600;
+            color: var(--uwp-primary);
+            font-size: 13px;
+        }
+        
+        /* Ultra-Compact Question Format */
+        .question-row {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            position: relative;
-            z-index: 2;
-            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-bottom: 1px solid #f0f0f0;
+            min-height: 30px;
         }
         
-        .step.active {
-            border-color: var(--secondary);
-            background-color: var(--secondary);
-            color: white;
-            transform: scale(1.1);
+        .question-row:nth-child(even) {
+            background-color: #fcfcfc;
         }
         
-        .step.completed {
-            border-color: var(--success);
-            background-color: var(--success);
-            color: white;
+        .question-text {
+            flex: 1;
+            padding-right: 15px;
+            font-size: 12.5px;
+            line-height: 1.2;
+            min-width: 0; /* Important for text truncation */
         }
         
-        .hidden {
-            display: none;
-        }
-        
-        .question {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .question:last-child {
-            border-bottom: none;
-        }
-        
-        .question h3 {
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-        
-        .scale {
+        /* Compact Scale - Inline with question */
+        .scale-compact {
             display: flex;
-            justify-content: space-between;
-            margin-top: 1rem;
+            gap: 2px;
+            flex-shrink: 0;
         }
         
         .scale-option {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            flex: 1;
-            text-align: center;
-            padding: 0.5rem;
+            margin-left: 3px;
         }
         
-        .scale-option input {
-            margin-bottom: 0.5rem;
+        .scale-option input[type="radio"] {
+            margin: 0 2px 0 0;
+            transform: scale(0.9);
         }
         
-        .section {
-            margin-bottom: 2.5rem;
-            padding: 1.5rem;
-            background-color: #f9f9f9;
-            border-radius: var(--border-radius);
-            border-left: 5px solid var(--secondary);
+        .scale-label {
+            font-size: 11px;
+            color: var(--uwp-text-light);
+            white-space: nowrap;
         }
         
-        .section-title {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
+        /* Button Container */
+        .button-container {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-top: 1px solid var(--uwp-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .section-insight {
-            background-color: #e8f4fc;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin-top: 1.5rem;
-            font-style: italic;
-            border-left: 4px solid var(--secondary);
-        }
-        
+        /* UWP Buttons */
         .btn {
-            background-color: var(--secondary);
+            background: var(--uwp-primary);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 6px 14px;
+            border-radius: 2px;
+            font-size: 12px;
             font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
         }
         
         .btn:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background: var(--uwp-hover);
         }
         
-        .btn-accent {
-            background-color: var(--accent);
+        .btn-secondary {
+            background: var(--uwp-secondary);
+            color: var(--uwp-text);
         }
         
-        .btn-accent:hover {
-            background-color: #c0392b;
+        .btn-secondary:hover {
+            background: #b0b4bc;
         }
         
         .btn-success {
-            background-color: var(--success);
+            background: var(--uwp-accent);
         }
         
         .btn-success:hover {
-            background-color: #219653;
+            background: #005a2d;
         }
         
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-        }
-        
-        .results-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 2rem;
+        /* Results Page */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            padding: 10px;
         }
         
         .result-card {
-            flex: 1;
-            min-width: 300px;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+            background: white;
+            border: 1px solid var(--uwp-border);
+            border-radius: 3px;
+            padding: 10px;
+            font-size: 12px;
         }
         
-        .type-indicator {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
+        .result-card h4 {
+            color: var(--uwp-primary);
+            margin-bottom: 5px;
+            font-size: 13px;
         }
         
-        .situation-type {
-            background-color: #e8f4fc;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin-top: 2rem;
-            border: 2px solid var(--secondary);
-        }
-        
-        .type-details {
-            background-color: white;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-        
-        .weekly-template {
-            background-color: #f8f9fa;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            border: 1px dashed #ccc;
-        }
-        
-        .day-schedule {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .day {
-            background-color: white;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        
-        .lab-day {
-            background-color: #e8f4fc;
-            border: 2px solid var(--secondary);
-        }
-        
-        .lab-time {
-            font-weight: bold;
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-        }
-        
-        footer {
-            margin-top: 3rem;
+        /* UWP Footer */
+        .uwp-footer {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-top: 1px solid var(--uwp-border);
+            font-size: 11px;
+            color: var(--uwp-text-light);
             text-align: center;
-            color: #777;
-            font-size: 0.9rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #eee;
         }
         
-        @media (max-width: 768px) {
-            .step-indicator {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 1rem;
-            }
-            
-            .step-indicator::before {
-                display: none;
-            }
-            
-            .scale {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            
-            .scale-option {
-                flex-direction: row;
-                justify-content: flex-start;
-                text-align: left;
-            }
-            
-            .results-container {
-                flex-direction: column;
-            }
-            
-            .day-schedule {
-                grid-template-columns: 1fr;
-            }
+        /* Hidden sections */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Tooltip for scale */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            border-bottom: 1px dotted var(--uwp-text-light);
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--uwp-dark);
+            color: white;
+            text-align: center;
+            padding: 5px;
+            border-radius: 3px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            font-size: 11px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Stats summary */
+        .stats-summary {
+            display: flex;
+            gap: 15px;
+            padding: 8px 10px;
+            background: #f8f9fa;
+            border-radius: 2px;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: var(--uwp-primary);
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Lab-Centered Study Schedule System</h1>
-        <p class="tagline">"Scheduling failure is rarely a character flaw—it's usually a systems mismatch."</p>
-        <p>A diagnostic self-assessment and design tool for students with lab courses</p>
-    </header>
-    
     <div class="container">
-        <!-- Step Indicator -->
-        <div class="step-indicator">
-            <div class="step active" id="step1">1</div>
-            <div class="step" id="step2">2</div>
-            <div class="step" id="step3">3</div>
-            <div class="step" id="step4">4</div>
+        <!-- UWP Header -->
+        <div class="uwp-header">
+            <h1>Lab Schedule Diagnostic</h1>
+            <p>University of Wisconsin-Parkside • Identify system mismatches in your study schedule</p>
         </div>
         
-        <!-- Step 1: Diagnostic -->
-        <div class="card" id="step1-content">
-            <h2>Study Schedule Systems Check</h2>
-            <p><strong>Purpose:</strong> This self-assessment is not about discipline or willpower. It helps you identify <em>system mismatches</em> between your life, your courses, and your study plan—so you can fix the system instead of blaming yourself.</p>
-            <p><strong>Instructions:</strong> For each statement, select the option that best describes you <strong>most weeks this semester</strong>.</p>
-            <p><strong>Scale:</strong> 0 = Not at all true, 1 = Occasionally true, 2 = Often true, 3 = Very true</p>
-            
-            <form id="diagnostic-form">
-                <!-- Section A -->
-                <div class="section">
-                    <h3 class="section-title">Section A: Time Volatility & External Constraints</h3>
-                    <div class="question">
-                        <p>1. My weekly workload changes significantly from one week to the next.</p>
-                        <div class="scale">
-                            <div class="scale-option"><input type="radio" name="q1" value="0" required> 0</div>
-                            <div class="scale-option"><input type="radio" name="q1" value="1"> 1</div>
-                            <div class="scale-option"><input type="radio" name="q1" value="2"> 2</div>
-                            <div class="scale-option"><input type="radio" name="q1" value="3"> 3</div>
-                        </div>
-                    </div>
-                    
-                    <div class="question">
-                        <p>2. My job, internship, or extracurricular activities have irregular hours.</p>
-                        <div class="scale">
-                            <div class="scale-option"><input type="radio" name="q2" value="0" required> 0</div>
-                            <div class="scale-option"><input type="radio" name="q2" value="1"> 1</div>
-                            <div class="scale-option"><input type="radio" name="q2" value="2"> 2</div>
-                            <div class="scale-option"><input type="radio" name="q2" value="3"> 3</div>
-                        </div>
-                    </div>
-                    
-                    <div class="question">
-                        <p>3. Social or family responsibilities frequently disrupt my planned study time.</p>
-                        <div class="scale">
-                            <div class="scale-option"><input type="radio" name="q3" value="0" required> 0</div>
-                            <div class="scale-option"><input type="radio" name="q3" value="1"> 1</div>
-                            <div class="scale-option"><input type="radio" name="q3" value="2"> 2</div>
-                            <div class="scale-option"><input type="radio" name="q3" value="3"> 3</div>
-                        </div>
-                    </div>
-                    
-                    <div class="section-insight">
-                        <strong>Section A Insight:</strong> High scores here indicate that <strong>fixed, rigid schedules are likely to fail</strong> for you—even if you're motivated.
-                    </div>
-                </div>
-                
-                <!-- Section B -->
-                <div class="section">
-                    <h3 class="section-title">Section B: Planning & Time Estimation Skills</h3>
-                    <div class="question">
-                        <p>8. I often underestimate how long assignments or studying will take.</p>
-                        <div class="scale">
-                            <div class="scale-option"><input type="radio" name="q8" value="0" required> 0</div>
-                            <div class="scale-option"><input type="radio" name="q8" value="1"> 1</div>
-                            <div class="scale-option"><input type="radio" name="q8" value="2"> 2</div>
-                            <div class="scale-option"><input type="radio" name="q8" value="3"> 3</div>
-                        </div>
-                    </div>
-                    
-                    <div class="question">
-                        <p>9. I plan study time without accounting for fatigue or transition time.</p>
-                        <div class="scale">
-                            <div class="scale-option"><input type="radio" name="q9" value="0" required> 0</div>
-                            <div class="scale-option"><input type="radio" name="q9" value="1"> 1</div>
-                            <div class="scale-option"><input type="radio" name="q9" value="2"> 2</div>
-                            <div class="scale-option"><input type="radio" name="q9" value="3"> 3</div>
-                        </div>
-                    </div>
-                    
-                    <div class="section-insight">
-                        <strong>Section B Insight:</strong> High scores suggest a <strong>planning mismatch</strong>, not laziness. Your system may need better estimation tools and clearer task definitions.
-                    </div>
-                </div>
-                
-                <!-- Note: In a complete version, all 25 questions would be included -->
-                <p><em>Note: For brevity, this demo includes sample questions. The full version would include all 25 questions from all sections.</em></p>
-                
-                <div class="navigation">
-                    <div></div> <!-- Empty div for spacing -->
-                    <button type="button" class="btn" id="next-to-step2">Complete Diagnostic →</button>
-                </div>
-            </form>
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">Section <span id="currentSection">A</span> of 5 • <span id="questionsComplete">0</span>/25 questions answered</div>
         </div>
         
-        <!-- Step 2: Results & Situation Type -->
-        <div class="card hidden" id="step2-content">
-            <h2>Your Diagnostic Results</h2>
-            <p>Based on your responses, here's your constraint profile:</p>
-            
-            <div class="results-container">
-                <div class="result-card" style="background-color: #e8f4fc;">
-                    <div class="type-indicator" style="background-color: var(--secondary); color: white;">Section A Score</div>
-                    <h3>Time Volatility & Constraints</h3>
-                    <p id="scoreA">Calculating...</p>
-                    <p>Your external constraints and schedule irregularity level.</p>
-                </div>
-                
-                <div class="result-card" style="background-color: #fff8e1;">
-                    <div class="type-indicator" style="background-color: var(--warning); color: white;">Section B Score</div>
-                    <h3>Planning Skills</h3>
-                    <p id="scoreB">Calculating...</p>
-                    <p>Your time estimation and planning approach.</p>
-                </div>
-                
-                <div class="result-card" style="background-color: #f1f8e9;">
-                    <div class="type-indicator" style="background-color: var(--success); color: white;">Total Score</div>
-                    <h3>Overall Score</h3>
-                    <p id="totalScore">Calculating...</p>
-                    <p>Your overall scheduling challenge level.</p>
-                </div>
-            </div>
-            
-            <div class="situation-type">
-                <h3>Your Situation Type: <span id="situationType">Analyzing...</span></h3>
-                <p id="situationDescription">Based on your diagnostic results, we'll identify which of the 7 student situation types best matches your constraints.</p>
-                <p id="situationInsight">This isn't a flaw—it's a constraint profile that tells us what kind of scheduling system will work best for you.</p>
-            </div>
-            
-            <div class="navigation">
-                <button type="button" class="btn" id="back-to-step1">← Back to Diagnostic</button>
-                <button type="button" class="btn" id="next-to-step3">Design Your Week →</button>
-            </div>
-        </div>
-        
-        <!-- Step 3: Lab-Centered Week Design -->
-        <div class="card hidden" id="step3-content">
-            <h2>Design Your Lab-Centered Week</h2>
-            <p><strong>Rule 1: The Lab Is the Anchor, Not the Add-On</strong></p>
-            <p>Your week bends around your lab. Your lab does not squeeze into your week.</p>
-            
-            <div class="weekly-template">
-                <h3>Weekly Template Around Tuesday Lab (2:00–4:50)</h3>
-                
-                <div class="day-schedule">
-                    <div class="day">
-                        <h4>Sunday</h4>
-                        <p><strong>Pre-Lab Phase 1:</strong> 30 min</p>
-                        <ul>
-                            <li>Skim protocol</li>
-                            <li>Identify unfamiliar terms</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="day">
-                        <h4>Monday</h4>
-                        <p><strong>Pre-Lab Phase 2:</strong> 45 min</p>
-                        <ul>
-                            <li>Active pre-lab questions</li>
-                            <li>Diagram flow</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="day lab-day">
-                        <h4>Tuesday (Lab Day)</h4>
-                        <p class="lab-time">2:00–4:50: LAB</p>
-                        <p><strong>Pre-Lab (1:45–2:00):</strong> 15 min</p>
-                        <ul>
-                            <li>Checklist + mental walkthrough</li>
-                        </ul>
-                        <p><strong>Post-Lab (Evening):</strong> 15-20 min</p>
-                        <ul>
-                            <li>Label graphs</li>
-                            <li>Rewrite messy notes</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="day">
-                        <h4>Wednesday</h4>
-                        <p><strong>Post-Lab Synthesis:</strong> 45-60 min</p>
-                        <ul>
-                            <li>Connect results to lecture concepts</li>
-                            <li>Answer post-lab questions</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="day">
-                        <h4>Friday</h4>
-                        <p><strong>Integration:</strong> 30-45 min</p>
-                        <ul>
-                            <li>Lab quiz prep</li>
-                            <li>Cumulative integration</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div id="customized-plan">
-                    <!-- This will be populated based on the situation type -->
-                </div>
-            </div>
-            
-            <div class="type-details" id="type-specific-design">
-                <h3>Design Rules for Your Situation Type</h3>
-                <p>Based on your diagnostic results, these design principles will help you create a sustainable schedule:</p>
-                <ul id="design-principles">
-                    <li>Loading...</li>
+        <!-- Main Diagnostic Container -->
+        <div class="diagnostic-container">
+            <!-- Sections Sidebar -->
+            <div class="sections-sidebar">
+                <ul class="section-nav">
+                    <li><a href="#" class="active" data-section="A">A. Time Volatility</a></li>
+                    <li><a href="#" data-section="B">B. Planning Skills</a></li>
+                    <li><a href="#" data-section="C">C. Study Strategies</a></li>
+                    <li><a href="#" data-section="D">D. Attention & Focus</a></li>
+                    <li><a href="#" data-section="E">E. Access & Identity</a></li>
                 </ul>
             </div>
             
-            <div class="navigation">
-                <button type="button" class="btn" id="back-to-step2">← Back to Results</button>
-                <button type="button" class="btn" id="next-to-step4">Generate Your Plan →</button>
-            </div>
-        </div>
-        
-        <!-- Step 4: Exportable Plan -->
-        <div class="card hidden" id="step4-content">
-            <h2>Your Personalized Study Schedule Plan</h2>
-            <p>Here's your customized week design based on your diagnostic results and situation type.</p>
-            
-            <div class="weekly-template">
-                <h3 id="plan-title">Your Lab-Centered Week</h3>
-                <div id="final-plan">
-                    <!-- Final plan will be inserted here -->
+            <!-- Questions Area -->
+            <div class="questions-area" id="questionsArea">
+                <!-- Section A (default visible) -->
+                <div class="section" id="sectionA">
+                    <div class="section-header">
+                        Section A: Time Volatility & External Constraints
+                        <span style="float:right; font-weight:normal; font-size:11px;">
+                            Score: <span id="scoreA">0</span>/21
+                        </span>
+                    </div>
+                    
+                    <!-- Questions will be generated here -->
+                    <div id="questionsSectionA"></div>
+                </div>
+                
+                <!-- Other sections (hidden by default) -->
+                <div class="section hidden" id="sectionB">
+                    <div class="section-header">
+                        Section B: Planning & Time Estimation Skills
+                        <span style="float:right; font-weight:normal; font-size:11px;">
+                            Score: <span id="scoreB">0</span>/12
+                        </span>
+                    </div>
+                    <div id="questionsSectionB"></div>
+                </div>
+                
+                <div class="section hidden" id="sectionC">
+                    <div class="section-header">
+                        Section C: Study Strategies & Academic Know-How
+                        <span style="float:right; font-weight:normal; font-size:11px;">
+                            Score: <span id="scoreC">0</span>/12
+                        </span>
+                    </div>
+                    <div id="questionsSectionC"></div>
+                </div>
+                
+                <div class="section hidden" id="sectionD">
+                    <div class="section-header">
+                        Section D: Motivation, Attention, & Mental Load
+                        <span style="float:right; font-weight:normal; font-size:11px;">
+                            Score: <span id="scoreD">0</span>/15
+                        </span>
+                    </div>
+                    <div id="questionsSectionD"></div>
+                </div>
+                
+                <div class="section hidden" id="sectionE">
+                    <div class="section-header">
+                        Section E: Access, Identity, & Learning Differences
+                        <span style="float:right; font-weight:normal; font-size:11px;">
+                            Score: <span id="scoreE">0</span>/12
+                        </span>
+                    </div>
+                    <div id="questionsSectionE"></div>
                 </div>
             </div>
-            
-            <div class="type-details">
-                <h3>Failure Mode & Recovery Plan</h3>
-                <p id="recovery-plan">When (not if) your plan breaks, here's how to recover based on your situation type.</p>
+        </div>
+        
+        <!-- Button Container -->
+        <div class="button-container">
+            <div>
+                <button class="btn-secondary" id="saveProgress">Save Progress</button>
+                <button class="btn-secondary" id="clearSection">Clear Section</button>
             </div>
-            
-            <div class="navigation">
-                <button type="button" class="btn" id="back-to-step3">← Back to Design</button>
-                <button type="button" class="btn btn-success" id="export-plan">Export Plan as PDF</button>
-                <button type="button" class="btn btn-accent" id="restart">Start Over</button>
+            <div>
+                <button class="btn-secondary" id="prevSection" disabled>← Previous Section</button>
+                <button class="btn" id="nextSection">Next Section →</button>
+                <button class="btn-success hidden" id="viewResults">View Results & Recommendations</button>
             </div>
         </div>
+        
+        <!-- Results Page (Hidden) -->
+        <div class="hidden" id="resultsPage">
+            <div style="padding:15px;">
+                <h2 style="color:var(--uwp-primary); border-bottom:1px solid var(--uwp-border); padding-bottom:5px; margin-bottom:10px;">
+                    Diagnostic Results & Recommendations
+                </h2>
+                
+                <!-- Stats Summary -->
+                <div class="stats-summary">
+                    <div class="stat-item">
+                        <span>Total Score:</span>
+                        <span class="stat-value" id="totalScore">0</span>/72
+                    </div>
+                    <div class="stat-item">
+                        <span>Primary Challenge:</span>
+                        <span class="stat-value" id="primaryChallenge">None</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Situation Type:</span>
+                        <span class="stat-value" id="situationType">Undetermined</span>
+                    </div>
+                </div>
+                
+                <!-- Results Grid -->
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h4>Section A: Time Volatility</h4>
+                        <p>Score: <strong id="finalScoreA">0</strong>/21</p>
+                        <p style="margin-top:5px; font-size:11px; color:var(--uwp-accent);">
+                            <strong>Insight:</strong> High scores indicate fixed, rigid schedules are likely to fail for you.
+                        </p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Section B: Planning Skills</h4>
+                        <p>Score: <strong id="finalScoreB">0</strong>/12</p>
+                        <p style="margin-top:5px; font-size:11px; color:var(--uwp-accent);">
+                            <strong>Insight:</strong> High scores suggest a planning mismatch, not laziness.
+                        </p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Section C: Study Strategies</h4>
+                        <p>Score: <strong id="finalScoreC">0</strong>/12</p>
+                        <p style="margin-top:5px; font-size:11px; color:var(--uwp-accent);">
+                            <strong>Insight:</strong> High scores mean scheduling alone won't help—you need strategy clarity.
+                        </p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Section D: Attention & Focus</h4>
+                        <p>Score: <strong id="finalScoreD">0</strong>/15</p>
+                        <p style="margin-top:5px; font-size:11px; color:var(--uwp-accent);">
+                            <strong>Insight:</strong> High scores point to cognitive constraints, not lack of effort.
+                        </p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>Section E: Access & Identity</h4>
+                        <p>Score: <strong id="finalScoreE">0</strong>/12</p>
+                        <p style="margin-top:5px; font-size:11px; color:var(--uwp-accent);">
+                            <strong>Insight:</strong> High scores indicate standard advice may not fit your reality.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Recommendations -->
+                <div style="margin-top:15px; padding:10px; background:#f8f9fa; border-radius:3px; border-left:3px solid var(--uwp-primary);">
+                    <h4 style="color:var(--uwp-primary); margin-bottom:8px;">Personalized Recommendations</h4>
+                    <div id="recommendations">
+                        <p>Complete the diagnostic to see personalized recommendations.</p>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div style="margin-top:15px; text-align:center;">
+                    <button class="btn" id="generateSchedule">Generate Lab-Centered Schedule</button>
+                    <button class="btn-secondary" id="retakeDiagnostic">Retake Diagnostic</button>
+                    <button class="btn-secondary" id="downloadResults">Download Results (PDF)</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- UWP Footer -->
+        <div class="uwp-footer">
+            University of Wisconsin-Parkside • This diagnostic is part of the Student Success Initiative
+            <br>
+            <span style="font-size:10px;">© 2024 UW-Parkside. "Scheduling failure is rarely a character flaw—it's usually a systems mismatch."</span>
+        </div>
     </div>
-    
-    <footer>
-        <p>Lab-Centered Study Schedule System • Designed for undergraduate success</p>
-        <p>This tool can be hosted on GitHub Pages as a static website</p>
-    </footer>
 
     <script>
-        // Step navigation
-        const steps = document.querySelectorAll('.step');
-        const stepContents = document.querySelectorAll('.card');
-        let currentStep = 1;
-        
-        // Situation types data
-        const situationTypes = {
-            1: {
-                name: "The Volatile Week Student",
-                scoreRange: "55-75",
-                description: "No two weeks look the same. Fixed schedules fail.",
-                designPrinciples: [
-                    "Use modular study blocks that can be rearranged",
-                    "Create floating pre-lab tasks that can shift",
-                    "Implement a weekly 'rebuild the week' ritual",
-                    "Prioritize flexibility over rigidity"
-                ],
-                recovery: "If Tuesday collapses, move your post-lab synthesis to Wednesday morning and condense Friday's integration into a 20-minute session."
-            },
-            2: {
-                name: "The Overcommitted Achiever",
-                scoreRange: "45-54",
-                description: "Tries to do everything → collapses mid-week.",
-                designPrinciples: [
-                    "Build buffer time into every day",
-                    "Schedule explicit 'non-study' time",
-                    "Set upper limits on daily study minutes",
-                    "Protect Tuesday evening for light processing only"
-                ],
-                recovery: "When overwhelmed, drop non-essential tasks and focus only on pre-lab prep and immediate post-lab processing."
-            },
-            3: {
-                name: "The Last-Minute Survivor",
-                scoreRange: "38-44",
-                description: "Relies on adrenaline, not systems.",
-                designPrinciples: [
-                    "Create forced early micro-deadlines",
-                    "Use distributed pre-lab exposure (small chunks)",
-                    "Implement retrieval-based checkpoints",
-                    "Schedule accountability sessions"
-                ],
-                recovery: "If you fall behind, immediately schedule a 25-minute focused session to complete the most critical pre-lab component."
-            },
-            4: {
-                name: "The Strategy-Deficient Student",
-                scoreRange: "30-37",
-                description: "Willing to study, doesn't know how.",
-                designPrinciples: [
-                    "Use highly scripted study sessions",
-                    "Follow pre-built lab workflows exactly",
-                    "Schedule explicit 'what to do for 30 minutes' tasks",
-                    "Focus on one study method at a time"
-                ],
-                recovery: "When uncertain, revert to the basic template: 30 min Sunday, 45 min Monday, 15 min Tuesday pre-lab."
-            },
-            5: {
-                name: "The Burned-Out / Low Bandwidth Student",
-                scoreRange: "22-29",
-                description: "Energy, not time, is the bottleneck.",
-                designPrinciples: [
-                    "Schedule short, low-friction sessions only",
-                    "Sequence tasks by cognitive load (easiest first)",
-                    "Mandatory recovery periods post-lab",
-                    "Never schedule intensive work after lab"
-                ],
-                recovery: "If exhausted, do only the 15-minute Tuesday pre-lab and postpone everything else to Wednesday morning."
-            },
-            6: {
-                name: "The Structurally Constrained Student",
-                scoreRange: "15-21",
-                description: "External constraints dominate.",
-                designPrinciples: [
-                    "Create asynchronous, offline-ready planning",
-                    "Use micro-study units (15-20 min max)",
-                    "Set non-time-based goals (e.g., 'answer 3 questions')",
-                    "Mobile-first approach to studying"
-                ],
-                recovery: "When external demands intervene, use micro-sessions (10-15 min) to make incremental progress."
-            },
-            7: {
-                name: "The Miscalibrated Optimist",
-                scoreRange: "0-14",
-                description: "Has time, misjudges effort.",
-                designPrinciples: [
-                    "Practice time estimation calibration",
-                    "Conduct weekly retrospective planning audits",
-                    "Add 50% buffer to all time estimates",
-                    "Track actual vs. planned time use"
-                ],
-                recovery: "When behind schedule, immediately reduce scope and focus on the minimum viable pre-lab preparation."
-            }
+        // Question Data - All 25 questions compactly organized
+        const questions = {
+            A: [
+                "My weekly workload changes significantly from one week to the next.",
+                "My job, internship, or extracurricular activities have irregular hours.",
+                "Social or family responsibilities frequently disrupt my planned study time.",
+                "My class schedule includes rotating labs, recitations, or variable meeting times.",
+                "Commuting or transportation takes time and energy I can't always predict.",
+                "Multiple exams or major assignments tend to cluster in the same weeks.",
+                "I have caregiving responsibilities that affect when or how long I can study."
+            ],
+            B: [
+                "I often underestimate how long assignments or studying will take.",
+                "I plan study time without accounting for fatigue or transition time.",
+                "I feel guilty or stressed when I can't follow a study plan exactly.",
+                "I struggle to decide *what* to study during a scheduled session.",
+                "I rely on last-minute studying because it has worked for me before."
+            ],
+            C: [
+                "I'm unsure which study methods actually improve long-term learning.",
+                "I default to rereading, highlighting, or cramming before exams.",
+                "I don't always understand what instructors expect me to know for exams.",
+                "I wait to study because I'm not sure what content is most important."
+            ],
+            D: [
+                "I procrastinate even when I've scheduled study time.",
+                "Digital distractions (phone, apps, games) derail my study sessions.",
+                "I feel mentally drained before I even start studying.",
+                "I worry that strict schedules will increase my stress or burnout.",
+                "My sleep schedule is irregular, which affects my focus and energy."
+            ],
+            E: [
+                "I don't always have reliable access to quiet space, technology, or internet.",
+                "I have ADHD, anxiety, or other learning differences that affect time perception or focus.",
+                "I feel pressure to 'handle everything on my own,' even when struggling.",
+                "I sometimes question whether I belong or am 'cut out' for college."
+            ]
         };
         
-        // Navigation functions
-        function showStep(stepNumber) {
-            // Hide all step contents
-            stepContents.forEach(content => {
-                content.classList.add('hidden');
+        const sectionMaxScores = {
+            A: 21, // 7 questions * 3 max
+            B: 15, // 5 questions * 3 max
+            C: 12, // 4 questions * 3 max
+            D: 15, // 5 questions * 3 max
+            E: 12  // 4 questions * 3 max
+        };
+        
+        // Initialize scores
+        let scores = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+        let answers = {};
+        let currentSection = 'A';
+        
+        // Generate all questions on page load
+        function generateQuestions() {
+            for (const section in questions) {
+                const container = document.getElementById(`questionsSection${section}`);
+                container.innerHTML = '';
+                
+                questions[section].forEach((question, index) => {
+                    const questionNum = getQuestionNumber(section, index);
+                    const row = document.createElement('div');
+                    row.className = 'question-row';
+                    row.id = `q${questionNum}`;
+                    
+                    row.innerHTML = `
+                        <div class="question-text">
+                            ${questionNum}. ${question}
+                        </div>
+                        <div class="scale-compact">
+                            <div class="scale-option">
+                                <input type="radio" name="q${questionNum}" value="0" id="q${questionNum}_0">
+                                <label class="scale-label" for="q${questionNum}_0">0</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q${questionNum}" value="1" id="q${questionNum}_1">
+                                <label class="scale-label" for="q${questionNum}_1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q${questionNum}" value="2" id="q${questionNum}_2">
+                                <label class="scale-label" for="q${questionNum}_2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q${questionNum}" value="3" id="q${questionNum}_3">
+                                <label class="scale-label" for="q${questionNum}_3">3</label>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add event listener to radio buttons
+                    const radios = row.querySelectorAll('input[type="radio"]');
+                    radios.forEach(radio => {
+                        radio.addEventListener('change', function() {
+                            updateScore(section, questionNum, parseInt(this.value));
+                            updateProgress();
+                        });
+                    });
+                    
+                    container.appendChild(row);
+                });
+            }
+            
+            // Load saved progress if available
+            loadProgress();
+        }
+        
+        // Calculate question number across all sections
+        function getQuestionNumber(section, index) {
+            const sectionOffsets = { A: 1, B: 8, C: 13, D: 17, E: 22 };
+            return sectionOffsets[section] + index;
+        }
+        
+        // Update score for a section
+        function updateScore(section, questionNum, value) {
+            // Store answer
+            answers[questionNum] = value;
+            
+            // Recalculate section score
+            let sectionScore = 0;
+            const startQ = section === 'A' ? 1 : 
+                          section === 'B' ? 8 :
+                          section === 'C' ? 13 :
+                          section === 'D' ? 17 : 22;
+            const endQ = startQ + questions[section].length - 1;
+            
+            for (let q = startQ; q <= endQ; q++) {
+                sectionScore += answers[q] || 0;
+            }
+            
+            scores[section] = sectionScore;
+            document.getElementById(`score${section}`).textContent = sectionScore;
+            
+            // Update total if on results page
+            if (document.getElementById('resultsPage').classList.contains('hidden') === false) {
+                updateResultsDisplay();
+            }
+        }
+        
+        // Update progress bar and counters
+        function updateProgress() {
+            // Calculate answered questions
+            let answered = 0;
+            let total = 25; // Total questions
+            
+            for (let i = 1; i <= total; i++) {
+                if (answers[i] !== undefined) answered++;
+            }
+            
+            // Update progress bar
+            const progressPercent = (answered / total) * 100;
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            document.getElementById('questionsComplete').textContent = answered;
+            
+            // Update section score displays
+            for (const section in scores) {
+                document.getElementById(`score${section}`).textContent = scores[section];
+            }
+            
+            // Show/hide results button
+            if (answered === total) {
+                document.getElementById('viewResults').classList.remove('hidden');
+                document.getElementById('nextSection').classList.add('hidden');
+            } else {
+                document.getElementById('viewResults').classList.add('hidden');
+                document.getElementById('nextSection').classList.remove('hidden');
+            }
+        }
+        
+        // Navigate between sections
+        function navigateToSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(el => {
+                el.classList.add('hidden');
             });
             
-            // Show selected step content
-            document.getElementById(`step${stepNumber}-content`).classList.remove('hidden');
+            // Show selected section
+            document.getElementById(`section${section}`).classList.remove('hidden');
             
-            // Update step indicators
-            steps.forEach((step, index) => {
-                step.classList.remove('active', 'completed');
-                if (index + 1 < stepNumber) {
-                    step.classList.add('completed');
-                } else if (index + 1 === stepNumber) {
-                    step.classList.add('active');
+            // Update active nav
+            document.querySelectorAll('.section-nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === section) {
+                    link.classList.add('active');
                 }
             });
             
-            currentStep = stepNumber;
+            // Update current section
+            currentSection = section;
+            document.getElementById('currentSection').textContent = section;
             
-            // If we're showing step 2, calculate results
-            if (stepNumber === 2) {
-                calculateResults();
-            }
+            // Update button states
+            document.getElementById('prevSection').disabled = (section === 'A');
             
-            // If we're showing step 3, customize the design
-            if (stepNumber === 3) {
-                customizeDesign();
-            }
+            // Scroll to top of questions area
+            document.getElementById('questionsArea').scrollTop = 0;
+        }
+        
+        // Save progress to localStorage
+        function saveProgress() {
+            const progress = {
+                scores: scores,
+                answers: answers,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('uwpScheduleDiagnostic', JSON.stringify(progress));
             
-            // If we're showing step 4, generate the final plan
-            if (stepNumber === 4) {
-                generateFinalPlan();
+            // Show temporary confirmation
+            const btn = document.getElementById('saveProgress');
+            const originalText = btn.textContent;
+            btn.textContent = 'Saved!';
+            btn.style.background = 'var(--uwp-accent)';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 1500);
+        }
+        
+        // Load progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('uwpScheduleDiagnostic');
+            if (saved) {
+                try {
+                    const progress = JSON.parse(saved);
+                    scores = progress.scores || scores;
+                    answers = progress.answers || answers;
+                    
+                    // Restore radio button states
+                    for (const [questionNum, value] of Object.entries(answers)) {
+                        const radio = document.querySelector(`input[name="q${questionNum}"][value="${value}"]`);
+                        if (radio) {
+                            radio.checked = true;
+                        }
+                    }
+                    
+                    // Update displays
+                    updateProgress();
+                    for (const section in scores) {
+                        document.getElementById(`score${section}`).textContent = scores[section];
+                    }
+                } catch (e) {
+                    console.error('Error loading saved progress:', e);
+                }
             }
         }
         
-        // Calculate diagnostic results
-        function calculateResults() {
-            // In a real implementation, this would calculate based on all 25 questions
-            // For this demo, we'll use sample values
-            const scoreA = Math.floor(Math.random() * 21) + 15; // 15-35
-            const scoreB = Math.floor(Math.random() * 15) + 10; // 10-24
-            const totalScore = scoreA + scoreB + Math.floor(Math.random() * 20) + 10; // 35-75
+        // Clear current section
+        function clearCurrentSection() {
+            if (confirm(`Clear all answers in Section ${currentSection}?`)) {
+                const startQ = currentSection === 'A' ? 1 : 
+                              currentSection === 'B' ? 8 :
+                              currentSection === 'C' ? 13 :
+                              currentSection === 'D' ? 17 : 22;
+                const endQ = startQ + questions[currentSection].length - 1;
+                
+                for (let q = startQ; q <= endQ; q++) {
+                    delete answers[q];
+                    const radios = document.querySelectorAll(`input[name="q${q}"]`);
+                    radios.forEach(radio => radio.checked = false);
+                }
+                
+                scores[currentSection] = 0;
+                document.getElementById(`score${currentSection}`).textContent = '0';
+                updateProgress();
+            }
+        }
+        
+        // Show results page
+        function showResults() {
+            document.querySelector('.diagnostic-container').classList.add('hidden');
+            document.querySelector('.button-container').classList.add('hidden');
+            document.getElementById('resultsPage').classList.remove('hidden');
+            
+            updateResultsDisplay();
+            generateRecommendations();
+        }
+        
+        // Update results display
+        function updateResultsDisplay() {
+            const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+            document.getElementById('totalScore').textContent = totalScore;
+            
+            // Update individual scores
+            for (const section in scores) {
+                document.getElementById(`finalScore${section}`).textContent = scores[section];
+            }
+            
+            // Determine primary challenge
+            let maxScore = 0;
+            let primarySection = '';
+            for (const section in scores) {
+                if (scores[section] > maxScore) {
+                    maxScore = scores[section];
+                    primarySection = section;
+                }
+            }
+            
+            const challengeNames = {
+                A: 'Time Volatility',
+                B: 'Planning Skills',
+                C: 'Study Strategies',
+                D: 'Attention & Focus',
+                E: 'Access & Identity'
+            };
+            
+            document.getElementById('primaryChallenge').textContent = 
+                primarySection ? challengeNames[primarySection] : 'Balanced';
             
             // Determine situation type based on total score
-            let situationType;
-            if (totalScore >= 55) situationType = 1;
-            else if (totalScore >= 45) situationType = 2;
-            else if (totalScore >= 38) situationType = 3;
-            else if (totalScore >= 30) situationType = 4;
-            else if (totalScore >= 22) situationType = 5;
-            else if (totalScore >= 15) situationType = 6;
-            else situationType = 7;
+            let situationType = '';
+            if (totalScore >= 55) situationType = 'Volatile Week Student';
+            else if (totalScore >= 45) situationType = 'Overcommitted Achiever';
+            else if (totalScore >= 38) situationType = 'Last-Minute Survivor';
+            else if (totalScore >= 30) situationType = 'Strategy-Deficient Student';
+            else if (totalScore >= 22) situationType = 'Burned-Out / Low Bandwidth';
+            else if (totalScore >= 15) situationType = 'Structurally Constrained';
+            else situationType = 'Miscalibrated Optimist';
             
-            // Display scores
-            document.getElementById('scoreA').textContent = `${scoreA}/21`;
-            document.getElementById('scoreB').textContent = `${scoreB}/12`;
-            document.getElementById('totalScore').textContent = `${totalScore}/75`;
-            
-            // Display situation type
-            const type = situationTypes[situationType];
-            document.getElementById('situationType').textContent = type.name;
-            document.getElementById('situationDescription').textContent = type.description;
-            document.getElementById('situationInsight').innerHTML = 
-                `<strong>Key Insight:</strong> ${type.designPrinciples[0]}`;
-            
-            // Store for later use
-            localStorage.setItem('userScores', JSON.stringify({
-                scoreA, scoreB, totalScore, situationType
-            }));
+            document.getElementById('situationType').textContent = situationType;
         }
         
-        // Customize design based on situation type
-        function customizeDesign() {
-            const storedData = JSON.parse(localStorage.getItem('userScores'));
-            if (!storedData) return;
+        // Generate personalized recommendations
+        function generateRecommendations() {
+            const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+            let recommendations = '';
             
-            const type = situationTypes[storedData.situationType];
+            // Based on total score and section scores
+            if (scores.A >= 14) {
+                recommendations += '<p><strong>Flexible Scheduling Needed:</strong> Your schedule varies too much for fixed plans. Use modular blocks that can shift week-to-week.</p>';
+            }
             
-            // Update design principles
-            const principlesList = document.getElementById('design-principles');
-            principlesList.innerHTML = '';
-            type.designPrinciples.forEach(principle => {
-                const li = document.createElement('li');
-                li.textContent = principle;
-                principlesList.appendChild(li);
+            if (scores.B >= 9) {
+                recommendations += '<p><strong>Time Estimation Training:</strong> Practice estimating task durations and add 50% buffer time to all estimates.</p>';
+            }
+            
+            if (scores.C >= 8) {
+                recommendations += '<p><strong>Study Strategy Workshop:</strong> Learn evidence-based techniques like spaced repetition and retrieval practice.</p>';
+            }
+            
+            if (scores.D >= 10) {
+                recommendations += '<p><strong>Energy Management:</strong> Schedule study sessions when you have highest energy, not just when you have time.</p>';
+            }
+            
+            if (scores.E >= 8) {
+                recommendations += '<p><strong>Adaptive Systems:</strong> Standard advice may not work for you. Create a system that accommodates your specific constraints.</p>';
+            }
+            
+            if (totalScore >= 50) {
+                recommendations += '<p><strong>Lab-Centered Design Essential:</strong> Your Tuesday lab (2:00-4:50) must be the anchor of your entire week. Build everything around it.</p>';
+            }
+            
+            if (!recommendations) {
+                recommendations = '<p>Your scores indicate relatively balanced scheduling skills. Focus on maintaining consistency and refining your existing systems.</p>';
+            }
+            
+            document.getElementById('recommendations').innerHTML = recommendations;
+        }
+        
+        // Generate schedule (placeholder)
+        function generateSchedule() {
+            alert('Schedule generation feature would open a lab-centered weekly planner here. This would be implemented in Phase 2 of the project.');
+        }
+        
+        // Download results (placeholder)
+        function downloadResults() {
+            alert('PDF generation would be implemented using jsPDF library for client-side PDF creation.');
+        }
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            generateQuestions();
+            updateProgress();
+            
+            // Section navigation
+            document.querySelectorAll('.section-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navigateToSection(this.dataset.section);
+                });
             });
             
-            // Update customized plan section
-            const customizedPlan = document.getElementById('customized-plan');
-            customizedPlan.innerHTML = `
-                <h4>Customized for: ${type.name}</h4>
-                <p>Based on your diagnostic results, your schedule should prioritize:</p>
-                <ul>
-                    <li>${type.designPrinciples[0]}</li>
-                    <li>${type.designPrinciples[1]}</li>
-                </ul>
-            `;
-        }
-        
-        // Generate final plan
-        function generateFinalPlan() {
-            const storedData = JSON.parse(localStorage.getItem('userScores'));
-            if (!storedData) return;
+            // Next/Previous buttons
+            document.getElementById('nextSection').addEventListener('click', function() {
+                const nextSection = String.fromCharCode(currentSection.charCodeAt(0) + 1);
+                navigateToSection(nextSection);
+            });
             
-            const type = situationTypes[storedData.situationType];
+            document.getElementById('prevSection').addEventListener('click', function() {
+                const prevSection = String.fromCharCode(currentSection.charCodeAt(0) - 1);
+                navigateToSection(prevSection);
+            });
             
-            // Update plan title
-            document.getElementById('plan-title').textContent = 
-                `Your ${type.name} Lab-Centered Week`;
+            // Action buttons
+            document.getElementById('saveProgress').addEventListener('click', saveProgress);
+            document.getElementById('clearSection').addEventListener('click', clearCurrentSection);
+            document.getElementById('viewResults').addEventListener('click', showResults);
+            document.getElementById('generateSchedule').addEventListener('click', generateSchedule);
+            document.getElementById('downloadResults').addEventListener('click', downloadResults);
+            document.getElementById('retakeDiagnostic').addEventListener('click', function() {
+                if (confirm('Clear all answers and retake the diagnostic?')) {
+                    localStorage.removeItem('uwpScheduleDiagnostic');
+                    window.location.reload();
+                }
+            });
             
-            // Update final plan
-            const finalPlan = document.getElementById('final-plan');
-            finalPlan.innerHTML = `
-                <div class="day-schedule">
-                    <div class="day">
-                        <h4>Sunday</h4>
-                        <p><strong>Pre-Lab Phase 1:</strong> 30 min</p>
-                        <p><em>Customized: ${type.designPrinciples[0].split(':')[0]}</em></p>
-                    </div>
-                    
-                    <div class="day">
-                        <h4>Monday</h4>
-                        <p><strong>Pre-Lab Phase 2:</strong> 45 min</p>
-                        <p><em>Customized: ${type.designPrinciples[1].split(':')[0]}</em></p>
-                    </div>
-                    
-                    <div class="day lab-day">
-                        <h4>Tuesday (Lab Day)</h4>
-                        <p class="lab-time">2:00–4:50: LAB SESSION</p>
-                        <p><strong>Focus:</strong> Data acquisition, not learning consolidation</p>
-                        <p><em>Customized: Annotate why steps matter, flag confusion in real time</em></p>
-                    </div>
-                    
-                    <div class="day">
-                        <h4>Wednesday</h4>
-                        <p><strong>Post-Lab Synthesis:</strong> 45-60 min</p>
-                        <p><em>Customized: Connect results to lecture concepts</em></p>
-                    </div>
-                    
-                    <div class="day">
-                        <h4>Friday</h4>
-                        <p><strong>Integration:</strong> 30-45 min</p>
-                        <p><em>Customized: Lab quiz prep or cumulative integration</em></p>
-                    </div>
-                </div>
-            `;
-            
-            // Update recovery plan
-            document.getElementById('recovery-plan').innerHTML = `
-                <strong>When your plan breaks:</strong> ${type.recovery}<br><br>
-                <strong>Remember:</strong> Scheduling failure is rarely a character flaw—it's usually a systems mismatch. Adjust your system, not your self-worth.
-            `;
-        }
-        
-        // Event listeners for navigation
-        document.getElementById('next-to-step2').addEventListener('click', () => {
-            showStep(2);
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Ctrl+S to save
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    saveProgress();
+                }
+                // Number keys 1-5 to navigate sections
+                if (e.key >= '1' && e.key <= '5') {
+                    const sections = ['A', 'B', 'C', 'D', 'E'];
+                    navigateToSection(sections[parseInt(e.key) - 1]);
+                }
+            });
         });
-        
-        document.getElementById('back-to-step1').addEventListener('click', () => {
-            showStep(1);
-        });
-        
-        document.getElementById('next-to-step3').addEventListener('click', () => {
-            showStep(3);
-        });
-        
-        document.getElementById('back-to-step2').addEventListener('click', () => {
-            showStep(2);
-        });
-        
-        document.getElementById('next-to-step4').addEventListener('click', () => {
-            showStep(4);
-        });
-        
-        document.getElementById('back-to-step3').addEventListener('click', () => {
-            showStep(3);
-        });
-        
-        document.getElementById('restart').addEventListener('click', () => {
-            if (confirm('Are you sure you want to start over? Your current results will be lost.')) {
-                localStorage.removeItem('userScores');
-                document.getElementById('diagnostic-form').reset();
-                showStep(1);
-            }
-        });
-        
-        // Export plan as PDF (simulated)
-        document.getElementById('export-plan').addEventListener('click', () => {
-            alert('In a full implementation, this would generate a PDF of your personalized plan. For GitHub Pages, this could use jsPDF or similar library.');
-            // Example of what could be done:
-            // const doc = new jsPDF();
-            // doc.text("Your Lab-Centered Study Schedule", 10, 10);
-            // doc.save('lab-schedule-plan.pdf');
-        });
-        
-        // Initialize
-        showStep(1);
     </script>
 </body>
 </html>
